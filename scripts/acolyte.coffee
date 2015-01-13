@@ -1,3 +1,5 @@
+require 'newrelic'
+
 module.exports = (robot) ->
 
   process = require 'process'
