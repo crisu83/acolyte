@@ -1,3 +1,21 @@
+# Description
+#   Constains Destiny specific logic.
+#
+# Dependencies:
+#   -
+#
+# Configuration:
+#   -
+#
+# Commands:
+#   !xur - Replies with whether or not Xur is at the tower.
+#
+# Notes:
+#   -
+#
+# Author:
+#   crisu83
+
 module.exports = (robot) ->
 
   # xur

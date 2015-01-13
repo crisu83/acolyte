@@ -1,3 +1,23 @@
+# Description
+#   Contains generic logic for Acolyte.
+#
+# Dependencies:
+#   -
+#
+# Configuration:
+#   HUBOT_IRC_NICK
+#   HUBOT_IRC_PASSWORD
+#   HUBOT_IRC_ROOMS
+#
+# Commands:
+#   -
+#
+# Notes:
+#   -
+#
+# Author:
+#   crisu83
+
 module.exports = (robot) ->
 
   # hello
