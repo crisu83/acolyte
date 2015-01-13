@@ -1,5 +1,3 @@
-require 'newrelic'
-
 module.exports = (robot) ->
 
   # hello
