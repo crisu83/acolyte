@@ -40,4 +40,4 @@ module.exports = (robot) ->
       res.send "Xur is in the tower and depatures in " + formatTimeLeft(diff) + "."
     else
       diff = (Math.abs arrival - now) / 1000
-      res.send "Xur arrives in " + formatTimeLeft(diff) + "."
+      res.send "Xur arrives at the tower in " + formatTimeLeft(diff) + "."
