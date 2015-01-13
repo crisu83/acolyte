@@ -18,15 +18,10 @@
 
 module.exports = (robot) ->
 
+  moment = require 'moment'
+
   # xur
   robot.hear /!xur/i, (res) ->
-
-    # returns the UTC string for the next occurance of a given day
-    getUTCString = (date, day) ->
-      days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Xurday', 'Saturday']
-      tmp = new Date(date.getTime())
-      tmp.setDate date.getDate() + (7 + days.indexOf(day) - date.getDay()) % 7
-      tmp.getFullYear() + '-' + ("0" + (tmp.getMonth() + 1)).slice(-2) + '-' + ("0" + tmp.getDate()).slice(-2) + ' 09:00:00 UTC'
 
     # converts seconds to a human redable "time left" string.
     formatTimeLeft = (seconds) ->
@@ -49,13 +44,13 @@ module.exports = (robot) ->
       else
         minutes + " minutes"
 
-    now = new Date
-    arrival = new Date getUTCString now, 'Xurday'
-    departure = new Date getUTCString now, 'Sunday'
+    now = moment()
+    arrival = moment().day('Friday').set('hour', 9)
+    departure = moment().day('Sunday').set('hour', 9)
 
-    if now >= arrival && now < departure
+    if now.isAfter arrival and now.isBefore departure
       diff = (Math.abs departure - now) / 1000
-      res.send "Xur is in the tower and depatures in " + formatTimeLeft(diff) + "."
+      res.send "Xur is in the tower and depatures in " + formatTimeLeft diff + "."
     else
       diff = (Math.abs arrival - now) / 1000
-      res.send "Xur arrives at the tower in " + formatTimeLeft(diff) + "."
+      res.send "Xur arrives at the tower in " + formatTimeLeft diff + "."
