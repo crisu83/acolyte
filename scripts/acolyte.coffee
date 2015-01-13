@@ -2,8 +2,6 @@ require 'newrelic'
 
 module.exports = (robot) ->
 
-  process = require 'process'
-
   # hello
   robot.enter (res) ->
     if res.message.user.name is process.env.HUBOT_IRC_NICK
