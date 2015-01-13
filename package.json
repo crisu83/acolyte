@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "author": "Christoffer Niska <christofferniska@gmail.com>",
-  "description": "Your personal TwitchTV robot",
+  "description": "Your personal Twitch robot",
   "scripts": {
-    "start": "HUBOT_IRC_ROOMS=\"#calistartv\" HUBOT_IRC_DEBUG=\"true\" bin/hubot -a irc --name acolyte"
+    "start": "bin/hubot -a irc --name acolyte"
   },
   "dependencies": {
     "hubot": "^2.11.0",

@@ -4,11 +4,6 @@ set -e
 
 npm install
 
-export HUBOT_HEROKU_KEEPALIVE_URL="https://acolyte.herokuapp.com"
-export HUBOT_IRC_SERVER="irc.twitch.tv"
-export HUBOT_IRC_NICK="acolyte_bot"
-export HUBOT_IRC_PASSWORD="oauth:yihhbjja4kflu3gvbvch9n6v4zi39q"
-export HUBOT_IRC_PORT=6667
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
 
 exec node_modules/.bin/hubot "$@"
