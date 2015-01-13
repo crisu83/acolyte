@@ -41,6 +41,3 @@ module.exports = (robot) ->
     else
       diff = (Math.abs arrival - now) / 1000
       res.send "Xur arrives in " + formatTimeLeft(diff) + "."
-
-
-  # destiny profile

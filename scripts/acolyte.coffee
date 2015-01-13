@@ -6,9 +6,3 @@ module.exports = (robot) ->
       res.send "Hi there! I am Acolyte, your personal Twitch robot. Calistar is my master and I will do anything he demands."
     else
       res.send "Hello " + res.message.user.name + "!"
-
-  robot.hear /!now/i, (res) ->
-    now = new Date
-    res.send "The time is " + now
-
-  # more ...
