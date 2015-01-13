@@ -44,9 +44,9 @@ module.exports = (robot) ->
       else
         minutes + " minutes"
 
-    now = moment()
-    arrival = moment().day('Friday').set('hour', 9)
-    departure = moment().day('Sunday').set('hour', 9)
+    now = moment.utc()
+    arrival = moment.utc().day('Friday').set('hour', 9)
+    departure = moment.utc().day('Sunday').set('hour', 9)
 
     if now.isAfter arrival and now.isBefore departure
       diff = (Math.abs departure - now) / 1000
