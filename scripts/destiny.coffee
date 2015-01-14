@@ -21,7 +21,6 @@
 module.exports = (robot) ->
 
   moment = require "moment"
-  request = require "request"
   jsdom = require "jsdom"
 
   # !xur
