@@ -9,6 +9,8 @@
 #
 # Commands:
 #   !xur - Replies with whether or not Xur is at the tower.
+#   !ddb keyword - Searches http://destinydb.com with the given keyword
+#   !dwiki keyword - Searches http://destiny.wikia.com with the given keyword
 #
 # Notes:
 #   -
@@ -18,7 +20,9 @@
 
 module.exports = (robot) ->
 
-  moment = require 'moment'
+  moment = require "moment"
+  request = require "request"
+  jsdom = require "jsdom"
 
   # !xur
   robot.hear /!xur/i, (res) ->
@@ -37,19 +41,55 @@ module.exports = (robot) ->
       seconds -= minutes * minute
 
       if days > 0
-        days + " days, " + hours + " hours and " + minutes + " minutes"
+        "#{days} days, #{hours} hours and #{minutes} minutes"
       else if hours > 0
-        hours  + " hours and " + minutes + " minutes"
+        "#{hours} hours and #{minutes} minutes"
       else
-        minutes + " minutes"
+        "#{minutes} minutes"
 
     now = moment.utc()
     arrival = moment.utc().day(5).hours(9).minutes(0).seconds(0)
     departure = moment.utc().day(7).hours(9).minutes(0).seconds(0)
 
     if now.isAfter arrival and now.isBefore departure
-      diff = Math.abs(now - departure) / 1000
-      res.send "Xûr is in the tower and depatures in " + formatTimeLeft diff + "."
+      time = formatTimeLeft(Math.abs(now - departure) / 1000)
+      res.send "Xûr is in the tower and depatures in #{time}."
     else
-      diff = Math.abs(now - arrival) / 1000
-      res.send "Xûr arrives at the tower in " + formatTimeLeft diff + "."
+      time = formatTimeLeft(Math.abs(now - arrival) / 1000)
+      res.send "Xûr arrives at the tower in #{time}."
+
+  # !ddb
+  robot.hear /!ddb (.*)/i, (res) ->
+    endpoint = "http://destinydb.com"
+    keyword = res.match[1]
+    options =
+      url: endpoint + "/search?q=" + encodeURIComponent(keyword),
+      scripts: ["http://code.jquery.com/jquery.js"],
+      done: (error, window) ->
+        $ = window.$
+        if $("#related-1").length > 0
+          $anchor = $("#related-1 tr:first-child .name > div > a").first();
+          label = $anchor.text()
+          url = endpoint + $anchor.attr "href"
+          res.send "This is what I found with '#{keyword}': #{label} #{url}"
+        else
+          res.send "I am sorry, I was unable to find anything with '#{keyword}'."
+    jsdom.env options
+
+  # !dwiki
+  robot.hear /!dwiki (.*)/i, (res) ->
+    endpoint = "http://destiny.wikia.com"
+    keyword = res.match[1]
+    options =
+      url: endpoint + "/wiki/Special:Search?search=" + encodeURIComponent(keyword) + "&fulltext=Search"
+      scripts: ["http://code.jquery.com/jquery.js"]
+      done: (error, window) ->
+        $ = window.$
+        if $(".Results").length > 0
+          $anchor = $(".Results .result:first-child > article > h1 > a")
+          label = $anchor.text()
+          url = $anchor.attr "href"
+          res.send "This is what I found with '#{keyword}': #{label} #{url}"
+        else
+          res.send "I am sorry, I was unable to find anything with '#{keyword}'."
+    jsdom.env options
