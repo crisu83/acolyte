@@ -1,8 +1,9 @@
 # Description
-#   Constains Destiny specific logic.
+#   Destiny specific logic.
 #
 # Dependencies:
-#   -
+#   - moment
+#   - jsdom
 #
 # Configuration:
 #   -
@@ -67,9 +68,9 @@ module.exports = (robot) ->
       done: (error, window) ->
         $ = window.$
         if $("#related-1").length > 0
-          $anchor = $("#related-1 tr:first-child .name > div > a").first();
-          label = $anchor.text().toUpperCase()
-          url = endpoint + $anchor.attr "href"
+          $element = $("#related-1 tr:first-child .name > div > a").first();
+          label = $element.text().toUpperCase()
+          url = endpoint + $element.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
           res.send "I am sorry, I was unable to find anything with '#{keyword}'."
@@ -85,9 +86,9 @@ module.exports = (robot) ->
       done: (error, window) ->
         $ = window.$
         if $(".Results").length > 0
-          $anchor = $(".Results .result:first-child > article > h1 > a")
-          label = $anchor.text().toUpperCase()
-          url = $anchor.attr "href"
+          $element = $(".Results .result:first-child > article > h1 > a")
+          label = $element.text().toUpperCase()
+          url = $element.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
           res.send "I am sorry, I was unable to find anything with '#{keyword}'."

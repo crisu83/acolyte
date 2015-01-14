@@ -2,7 +2,7 @@
 #   Contains generic logic for Acolyte.
 #
 # Dependencies:
-#   -
+#   - jsdom
 #
 # Configuration:
 #   HUBOT_IRC_NICK
@@ -25,7 +25,7 @@ module.exports = (robot) ->
   # greet
   robot.enter (res) ->
     if res.message.user.name is process.env.HUBOT_IRC_NICK
-      res.send "Hi there! I am Acolyte, your personal Twitch robot. Calistar is my master and I will do anything he demands."
+      res.send "Greetings! I am Acolyte, your personal Twitch robot. Calistar is my master and I will do anything he demands."
     else
       res.send "Hello " + res.message.user.name + "!"
 
@@ -37,9 +37,9 @@ module.exports = (robot) ->
       done: (error, window) ->
         $ = window.$
         if $("#rn_AnswerText").length > 0
-          $status = $("#rn_AnswerText > p > span[style] > b").first();
-          status = $status.text().toUpperCase()
-          res.send "PSN seems to be #{status}"
+          $element = $("#rn_AnswerText > p > span[style] > b").first();
+          status = $element.text().toUpperCase()
+          res.send "PSN seems to be #{status}."
         else
           res.send "I am sorry, I was unable to determine the status of PSN."
     jsdom.env options
