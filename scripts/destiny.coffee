@@ -68,7 +68,7 @@ module.exports = (robot) ->
         $ = window.$
         if $("#related-1").length > 0
           $anchor = $("#related-1 tr:first-child .name > div > a").first();
-          label = $anchor.text()
+          label = $anchor.text().toUpperCase()
           url = endpoint + $anchor.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
@@ -86,7 +86,7 @@ module.exports = (robot) ->
         $ = window.$
         if $(".Results").length > 0
           $anchor = $(".Results .result:first-child > article > h1 > a")
-          label = $anchor.text()
+          label = $anchor.text().toUpperCase()
           url = $anchor.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
