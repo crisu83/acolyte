@@ -1,5 +1,5 @@
 # Description
-#   Contains generic logic for Acolyte.
+#   Personality of Acolyte.
 #
 # Dependencies:
 #   - jsdom
@@ -26,11 +26,11 @@ module.exports = (robot) ->
   robot.enter (res) ->
     if res.message.user.name is process.env.HUBOT_IRC_NICK
       res.send "Greetings! I am Acolyte, your personal Twitch robot. Calistar is my master and I will do anything he demands."
-    else
+    else if robot.room.users.length < 10
       res.send "Hello " + res.message.user.name + "!"
 
   # !psn
-  robot.hear /!psn/i, (res) ->
+  robot.hear /psn/i, (res) ->
     options =
       url: "https://support.us.playstation.com/app/answers/detail/a_id/237/~/psn-status%3A-online",
       scripts: ["http://code.jquery.com/jquery.js"],
