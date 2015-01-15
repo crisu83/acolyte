@@ -38,7 +38,7 @@ module.exports = (robot) ->
         $ = window.$
         if $("#rn_AnswerText").length > 0
           $element = $("#rn_AnswerText > p > span[style] > b").first();
-          status = $element.text().toUpperCase()
+          status = $element.text().toUpperCase() || "ONLINE"
           res.send "PSN seems to be #{status}."
         else
           res.send "I am sorry, I was unable to determine the status of PSN."
