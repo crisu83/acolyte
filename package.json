@@ -8,6 +8,7 @@
     "start": "bin/hubot -a irc --name acolyte"
   },
   "dependencies": {
+    "cleverbot-node": "^0.1.8",
     "hubot": "^2.11.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.1.2",
