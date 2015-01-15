@@ -1,1 +1,17 @@
-[]
+[
+  "advice.coffee",
+  "brb.coffee",
+  "cleverbot.coffee",
+  "decide.coffee",
+  "dice.coffee",
+  "do-it.coffee",
+  "excuse.coffee",
+  "fibonacci.coffee",
+  "flip.coffee",
+  "hello.coffee",
+  "nice.coffee",
+  "polite.coffee",
+  "remind.coffee",
+  "uptime.coffee",
+  "zen.coffee
+]
