@@ -2,16 +2,16 @@
 #   Destiny specific logic.
 #
 # Dependencies:
-#   - moment
-#   - jsdom
+#   - "moment": "^2.9.0"
+#   - "jsdom": "^2.0.0"
 #
 # Configuration:
 #   -
 #
 # Commands:
-#   !xur - Replies with whether or not Xur is at the tower.
-#   !ddb keyword - Searches http://destinydb.com with the given keyword
-#   !dwiki keyword - Searches http://destiny.wikia.com with the given keyword
+#   xur - Replies with whether or not Xur is at the tower.
+#   ddb <keyword> - Searches http://destinydb.com with the given keyword
+#   dwiki <keyword> - Searches http://destiny.wikia.com with the given keyword
 #
 # Notes:
 #   -
@@ -24,7 +24,7 @@ module.exports = (robot) ->
   moment = require "moment"
   jsdom = require "jsdom"
 
-  # !xur
+  # xur
   robot.hear /xur/i, (res) ->
 
     # converts seconds to a human redable "time left" string.
@@ -58,7 +58,7 @@ module.exports = (robot) ->
       time = formatTimeLeft(Math.abs(now - arrival) / 1000)
       res.send "Xûr arrives at the tower in #{time}."
 
-  # !ddb
+  # ddb
   robot.hear /ddb (.*)/i, (res) ->
     endpoint = "http://destinydb.com"
     keyword = res.match[1]
@@ -73,10 +73,10 @@ module.exports = (robot) ->
           url = endpoint + $element.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
-          res.send "I am sorry, I was unable to find anything with '#{keyword}'."
+          res.send "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
 
-  # !dwiki
+  # dwiki
   robot.hear /dwiki (.*)/i, (res) ->
     endpoint = "http://destiny.wikia.com"
     keyword = res.match[1]
@@ -91,5 +91,5 @@ module.exports = (robot) ->
           url = $element.attr "href"
           res.send "This is what I found with '#{keyword}': #{label} #{url}"
         else
-          res.send "I am sorry, I was unable to find anything with '#{keyword}'."
+          res.send "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
