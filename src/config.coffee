@@ -12,11 +12,12 @@ class Config
     value
 
   set: (key, value) ->
-    @robot.logger.info "Config.set: #{@STORAGE_KEY}.#{key} = #{value}"
     data = @load()
+    old = data[key]
     data[key] = value
     unless @save data
       @robot.logger.error "ERROR: Failed to save config."
+    @robot.logger.info "Config.set: #{@STORAGE_KEY}.#{key} = #{value} (#{old})"
 
   exists: (key) ->
     @VALID_KEYS.indexOf key isnt -1

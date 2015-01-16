@@ -4,7 +4,7 @@
   "author": "Christoffer Niska <christofferniska@gmail.com>",
   "description": "Your personal Twitch robot",
   "scripts": {
-    "start": "bin/hubot -a irc --name acolyte_bot --httpd"
+    "start": "bin/hubot -a irc --name acolyte_bot"
   },
   "dependencies": {
     "hubot": "^2.11.0",

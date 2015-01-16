@@ -40,12 +40,12 @@ module.exports = (robot) ->
           unless error
             num = body._total
             oldNum = acolyte.config.get "#{channel}.num_follows"
-            unless oldNum
-              if num > oldNum and body.follows.length isnt 0
+            if num > oldNum or oldNum is undefined
+              acolyte.config.set "#{channel}.num_follows", num
+              if body.follows.length isnt 0
                 nick = body.follows[0].user.name
                 robot.logger.info "New follower found: #{nick}"
-                res.send "Thank your for the follow #{nick}"
-              acolyte.config.set "#{channel}.num_follows", num
+                res.send "Thank your for the follow #{nick}."
 
     setInterval checkFollows, process.env.HUBOT_TWITCH_FOLLOWS_INTERVAL || 1000 * 60
 
