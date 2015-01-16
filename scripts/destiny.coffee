@@ -25,7 +25,7 @@ module.exports = (robot) ->
   jsdom = require "jsdom"
 
   # xur
-  robot.hear /xur/i, (res) ->
+  robot.hear /^xur/i, (res) ->
 
     # converts seconds to a human redable "time left" string.
     formatTimeLeft = (seconds) ->
@@ -59,7 +59,7 @@ module.exports = (robot) ->
       res.send "Xûr arrives at the tower in #{time}."
 
   # ddb
-  robot.hear /ddb (.*)/i, (res) ->
+  robot.hear /^ddb (.*)/i, (res) ->
     endpoint = "http://destinydb.com"
     keyword = res.match[1]
     options =
@@ -77,7 +77,7 @@ module.exports = (robot) ->
     jsdom.env options
 
   # dwiki
-  robot.hear /dwiki (.*)/i, (res) ->
+  robot.hear /^dwiki (.*)/i, (res) ->
     endpoint = "http://destiny.wikia.com"
     keyword = res.match[1]
     options =
