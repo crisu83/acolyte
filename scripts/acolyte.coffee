@@ -22,25 +22,26 @@ module.exports = (robot) ->
 
   # greet
   robot.enter (res) ->
-    robot.logger.info "acolyte: robot.enter called"
     channel = res.message.room.substring 1
     if res.message.user.name is robot.name
       res.send "Greetings! I'm Acolyte, your personal Twitch robot. I was created by Calistar to assist you."
-    else if robot.adapter.config.get("#{channel}.greet") is "on"
+    else if robot.adapter.config.get("#{channel}.show_greet") is "on"
       res.send "Hello " + res.message.user.name + "!"
 
   # config
-  robot.hear /^config ([\w_]+) (on|off)/i, (res) ->
-    robot.logger.info "acolyte: config command called"
+  robot.hear /^config ([\w_]+) (on|off|remove)/i, (res) ->
     channel = res.message.room.substring 1
     [key, value] = res.match.splice 1
-    if res.message.user.name.toLowerCase() is channel.toLowerCase() and robot.adapter.config.exists key
-      robot.adapter.config.set "#{channel}.#{key}", value
-      res.send "#{key} is now #{value}."
+    if res.message.user.name.toLowerCase() is channel.toLowerCase()
+      unless value is "remove"
+        robot.adapter.config.set "#{channel}.#{key}", value
+        res.send "#{key} is now #{value}."
+      else
+        robot.adapter.config.remove "#{channel}.#{key}"
+        res.send "#{key} removed."
 
   # psn
   robot.hear /^psn/, (res) ->
-    robot.logger.info "acolyte: psn command called"
     options =
       url: "https://support.us.playstation.com/app/answers/detail/a_id/237/~/psn-status%3A-online",
       scripts: ["http://code.jquery.com/jquery.js"],
