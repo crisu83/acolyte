@@ -20,29 +20,20 @@ module.exports = (robot) ->
 
   MAX_FOLLOWS_TO_SHOW = 20
 
-  acolyte = require "../src/acolyte"
-  TwitchClient = require "../src/twitch-client"
-
-  # note: these are not yet used as authentication is not implemented yet
-  clientId = process.env.HUBOT_TWITCH_CLIENT_ID
-  clientSecret = process.env.HUBOT_TWITCH_CLIENT_SECRET
-
-  client = new TwitchClient clientId, clientSecret
-
-  # check follows
+  # show follows
   robot.enter (res) ->
     channel = res.message.room.substring 1
 
     checkFollows = () ->
-      if acolyte.config.get("#{channel}.show_follows") is "on"
+      if robot.adapter.config.get("#{channel}.show_follows") is "on"
         robot.logger.info "Checking for new follows in #{channel} ..."
-        client.follows channel, (error, response, body) ->
+        robot.adapter.twitchClient.follows channel, (error, response, body) ->
           unless error
             num = body._total
-            oldNum = acolyte.config.get "#{channel}.num_follows"
+            oldNum = robot.adapter.config.get "#{channel}.num_follows"
             if num > oldNum or oldNum is undefined
-              acolyte.config.set "#{channel}.num_follows", num
-              if body.follows.length isnt 0
+              robot.adapter.config.set "#{channel}.num_follows", num
+              if body.follows.length isnt 0 and oldNum isnt undefined
                 nick = body.follows[0].user.name
                 robot.logger.info "New follower found: #{nick}"
                 res.send "Thank your for the follow #{nick}."
@@ -52,14 +43,14 @@ module.exports = (robot) ->
   # follows
   robot.hear /^follows/i, (res) ->
     channel = res.message.room.substring 1
-    client.follows channel, (error, response, body) ->
+    robot.adapter.twitchClient.follows channel, (error, response, body) ->
       unless error
         users = (item.user.name for item in body.follows)
         if users.length > MAX_FOLLOWS_TO_SHOW
           more = users.length - MAX_FOLLOWS_TO_SHOW - 1
           users = users.slice(0, MAX_FOLLOWS_TO_SHOW)
-          res.send "This channel is followed by: #{users.join(", ")} and #{more} more."
+          res.reply "This channel is followed by: #{users.join ", "} and #{more} more."
         else
-          res.send "This channel is followed by: #{users.join(", ")}."
+          res.reply "This channel is followed by: #{users.join ", "}."
       else
-        res.send "I was unable to get a list of the followers.";
+        res.reply "I was unable to get a list of the followers."

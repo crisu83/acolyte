@@ -4,7 +4,7 @@
   "author": "Christoffer Niska <christofferniska@gmail.com>",
   "description": "Your personal Twitch robot",
   "scripts": {
-    "start": "bin/hubot -a irc --name acolyte_bot"
+    "start": "bin/hubot -a twitch-adapter --name acolyte_bot"
   },
   "dependencies": {
     "hubot": "^2.11.0",
@@ -20,11 +20,10 @@
     "hubot-rules": "^0.1.0",
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.1",
+    "hubot-twitch-adapter": "0.0.1",
     "hubot-youtube": "^0.1.2",
     "jsdom": "^2.0.0",
-    "moment": "^2.9.0",
-    "q": "^1.1.2",
-    "request": "^2.51.0"
+    "moment": "^2.9.0"
   },
   "engines": {
     "node": "0.10.x"

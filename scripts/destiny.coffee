@@ -53,10 +53,10 @@ module.exports = (robot) ->
 
     if now.isAfter arrival and now.isBefore departure
       time = formatTimeLeft(Math.abs(now - departure) / 1000)
-      res.send "Xûr is in the tower and depatures in #{time}."
+      res.reply "Xûr is in the tower and depatures in #{time}."
     else
       time = formatTimeLeft(Math.abs(now - arrival) / 1000)
-      res.send "Xûr arrives at the tower in #{time}."
+      res.reply "Xûr arrives at the tower in #{time}."
 
   # ddb
   robot.hear /^ddb (.*)/i, (res) ->
@@ -71,9 +71,9 @@ module.exports = (robot) ->
           $element = $("#related-1 tr:first-child .name > div > a").first();
           label = $element.text().toUpperCase()
           url = endpoint + $element.attr "href"
-          res.send "This is what I found with '#{keyword}': #{label} #{url}"
+          res.reply "This is what I found with '#{keyword}': #{label} #{url}"
         else
-          res.send "I'm sorry, I was unable to find anything with '#{keyword}'."
+          res.reply "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
 
   # dwiki
@@ -89,7 +89,7 @@ module.exports = (robot) ->
           $element = $(".Results .result:first-child > article > h1 > a")
           label = $element.text().toUpperCase()
           url = $element.attr "href"
-          res.send "This is what I found with '#{keyword}': #{label} #{url}"
+          res.reply "This is what I found with '#{keyword}': #{label} #{url}"
         else
-          res.send "I'm sorry, I was unable to find anything with '#{keyword}'."
+          res.reply "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
