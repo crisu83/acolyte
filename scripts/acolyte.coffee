@@ -23,10 +23,22 @@ module.exports = (robot) ->
   # greet
   robot.enter (res) ->
     channel = res.message.room.substring 1
-    if res.message.user.name is robot.name
+    if robot.adapter.checkAccess res.message.user.name
       res.send "Greetings! I'm Acolyte, your personal Twitch robot. I was created by Calistar to assist you."
     else if robot.adapter.config.get("#{channel}.show_greet") is "on"
       res.send "Hello " + res.message.user.name + "!"
+
+  robot.hear /^join (.*)/, (res) ->
+    current = res.message.room.substring 1
+    channel = res.match[1]
+    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+      robot.adapter.join "#" + channel
+
+  robot.hear /^leave (.*)/, (res) ->
+    current = res.message.room.substring 1
+    channel = res.match[1]
+    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+      robot.adapter.part "#" + channel
 
   # config
   robot.hear /^config ([\w_]+) (on|off|remove)/i, (res) ->
