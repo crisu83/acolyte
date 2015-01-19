@@ -33,12 +33,14 @@ module.exports = (robot) ->
     channel = res.match[1]
     if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.join "#" + channel
+      res.reply "Joining #{channel}"
 
   robot.hear /^leave (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
     if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.part "#" + channel
+      res.reply "Leaving #{channel}"
 
   # config
   robot.hear /^config ([\w_]+) (on|off|remove)/i, (res) ->
