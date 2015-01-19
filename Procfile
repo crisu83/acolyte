@@ -1,1 +1,1 @@
-web: bin/hubot -a irc -n acolyte
+web: bin/hubot -a twitch-adapter -n acolyte_bot --httpd

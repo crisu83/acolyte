@@ -18,7 +18,7 @@
 
 module.exports = (robot) ->
 
-  MAX_FOLLOWS_TO_SHOW = 20
+  MAX_USERS_TO_LIST = 20
 
   # show follows
   robot.enter (res) ->
@@ -41,14 +41,14 @@ module.exports = (robot) ->
     setInterval checkFollows, process.env.HUBOT_TWITCH_FOLLOWS_INTERVAL || 1000 * 60
 
   # follows
-  robot.hear /^follows/i, (res) ->
+  robot.hear /^follows/, (res) ->
     channel = res.message.room.substring 1
     robot.adapter.twitchClient.follows channel, (error, response, body) ->
       unless error
         users = (item.user.name for item in body.follows)
-        if users.length > MAX_FOLLOWS_TO_SHOW
-          more = users.length - MAX_FOLLOWS_TO_SHOW - 1
-          users = users.slice(0, MAX_FOLLOWS_TO_SHOW)
+        if users.length > MAX_USERS_TO_LIST
+          more = users.length - MAX_USERS_TO_LIST - 1
+          users = users.slice(0, MAX_USERS_TO_LIST)
           res.reply "This channel is followed by: #{users.join ", "} and #{more} more."
         else
           res.reply "This channel is followed by: #{users.join ", "}."
