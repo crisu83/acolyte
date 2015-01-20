@@ -4,6 +4,9 @@ module.exports = function (grunt, options) {
       dest: '<%= buildRoot %>/js/vendor.js',
       dependencies: {
         'angular': 'jquery'
+      },
+      bowerOptions: {
+        relative: false
       }
     }
   };
