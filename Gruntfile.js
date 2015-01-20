@@ -38,7 +38,7 @@ module.exports = function (grunt) {
   // Optimization task (must be ran after the 'build' task)
   grunt.registerTask('optimize', [
     //'htmlmin', // breaks usemin
-    'imagemin',
+    //'imagemin', // slows down the build
     'ngAnnotate',
     'uglify',
     'cssmin',
