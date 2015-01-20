@@ -23,7 +23,7 @@ module.exports = (robot) ->
 
   jsdom = require "jsdom"
 
-  checkAcess = robot.adapter.checkAccess
+  checkAccess = robot.adapter.checkAccess
 
   # greet
   robot.enter (res) ->
