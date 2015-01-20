@@ -1,6 +1,6 @@
 bower_components
 node_modules
 client/public
-hubot/.hubot_history
+.hubot_history
 .DS_Store*
 hubot_config

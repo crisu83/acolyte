@@ -3,14 +3,13 @@ module.exports = function (grunt, options) {
     options: {
       inlineCSS: false
     },
-    styles: {
-      files: {
-        '<%= appRoot %>/styles/imports.less': [
-          'bower_components/bootstrap/less/bootstrap.less',
-          '<%= appRoot %>/styles/**/*.less',
-          '!<%= appRoot %>/styles/imports.less'
-        ]
-      }
+    all: {
+      src: [
+      'bower_components/bootstrap/less/bootstrap.less',
+      '<%= appRoot %>/styles/**/*.less',
+      '!<%= appRoot %>/styles/imports.less'
+      ],
+      dest: '<%= appRoot %>/styles/imports.less'
     }
   };
 };

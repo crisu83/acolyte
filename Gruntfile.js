@@ -24,10 +24,10 @@ module.exports = function (grunt) {
 
   // Build task
   grunt.registerTask('build', [
-    //'jshint',
+    //'jshint', // annoying during development
     'concat:scripts',
     'bower_concat',
-    'less_imports',
+    'less_imports:all',
     'less:all',
     'copy:assets',
     'copy:html',
@@ -37,8 +37,8 @@ module.exports = function (grunt) {
 
   // Optimization task (must be ran after the 'build' task)
   grunt.registerTask('optimize', [
-    //'htmlmin',
-    //'imagemin',
+    //'htmlmin', // breaks usemin
+    'imagemin',
     'ngAnnotate',
     'uglify',
     'cssmin',
@@ -56,7 +56,6 @@ module.exports = function (grunt) {
 
   // Development build task
   grunt.registerTask('dev', [
-    //'copy:scripts',
     'build',
     'publish'
   ]);
@@ -67,8 +66,5 @@ module.exports = function (grunt) {
     'optimize',
     'publish'
   ]);
-
-  grunt.registerTask('heroku:development', ['dev']);
-  grunt.registerTask('heroku:production', ['dist']);
 
 };

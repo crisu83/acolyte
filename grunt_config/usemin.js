@@ -22,7 +22,9 @@ module.exports = function (grunt, options) {
       '<%= buildRoot %>/index.html',
       '<%= buildRoot %>/partials/**/*.html'
     ],
-    css: ['<%= buildRoot %>/css/*.css'],
+    css: [
+      '<%= buildRoot %>/css/*.css'
+    ],
     partials: [
       '<%= buildRoot %>/partials/**/*.html',
       '<%= buildRoot %>/js/**/*.js'

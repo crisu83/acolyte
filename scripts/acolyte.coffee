@@ -23,6 +23,8 @@ module.exports = (robot) ->
 
   jsdom = require "jsdom"
 
+  logger = robot.logger
+
   # greet
   robot.enter (res) ->
     channel = res.message.room.substring 1
@@ -73,3 +75,5 @@ module.exports = (robot) ->
         else
           res.reply "I'm sorry, I was unable to determine the status of PSN."
     jsdom.env options
+
+  logger.info "scripts/acolyte.coffee loaded"

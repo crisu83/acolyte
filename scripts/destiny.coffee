@@ -24,6 +24,8 @@ module.exports = (robot) ->
   moment = require "moment"
   jsdom = require "jsdom"
 
+  logger = robot.logger
+
   # xur
   robot.hear /^xur/i, (res) ->
 
@@ -93,3 +95,5 @@ module.exports = (robot) ->
         else
           res.reply "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
+
+  logger.info "scripts/destiny.coffee loaded"

@@ -98,3 +98,5 @@ module.exports = (robot) ->
           res.reply "I'm authenticated with Twitch."
         else
           res.reply "I'm not authenticated with Twitch."
+
+  logger.info "scripts/twitch.coffee loaded"

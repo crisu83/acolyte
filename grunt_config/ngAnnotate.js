@@ -7,7 +7,7 @@ module.exports = function (grunt, options) {
       files: [
         {
           expand: true,
-          src: ['build/js/scripts.js'],
+          src: ['<%= buildRoot %>/js/scripts.js'],
           ext: '.annotated.js',
           extDot: 'last'
         }
