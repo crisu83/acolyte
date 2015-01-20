@@ -4,7 +4,7 @@
   "author": "Christoffer Niska <christofferniska@gmail.com>",
   "description": "Your personal Twitch robot",
   "scripts": {
-    "postinstall": "bower install; grunt dist",
+    "postinstall": "bower install; grunt dev",
     "start": "bin/hubot -a twitch-adapter --name acolyte_bot --httpd"
   },
   "dependencies": {
