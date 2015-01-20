@@ -8,10 +8,10 @@
 #   -
 #
 # Commands:
-#   - join <channel> - Joins a channel
-#   - leave <channel> - Leaves a channel
-#   - config <key> (on|off|remove) - Enables, disabled or removes a configuration
-#   - psn - Tells you the current status of the PlayStation Network
+#   - !join <channel> - Joins a channel
+#   - !leave <channel> - Leaves a channel
+#   - !config <key> (on|off|remove) - Enables, disabled or removes a configuration
+#   - !psn - Tells you the current status of the PlayStation Network
 #
 # Notes:
 #   -
@@ -34,7 +34,7 @@ module.exports = (robot) ->
       res.send "Hello " + res.message.user.name + "!"
 
   # join
-  robot.hear /^join (.*)/, (res) ->
+  robot.hear /^!join (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
     if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
@@ -42,7 +42,7 @@ module.exports = (robot) ->
       res.reply "Joining #{channel}"
 
   # leave
-  robot.hear /^leave (.*)/, (res) ->
+  robot.hear /^!leave (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
     if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
@@ -50,7 +50,7 @@ module.exports = (robot) ->
       res.reply "Leaving #{channel}"
 
   # config
-  robot.hear /^config ([\w_]+) (on|off|remove)/i, (res) ->
+  robot.hear /^!config ([\w_]+) (on|off|remove)/i, (res) ->
     channel = res.message.room.substring 1
     [key, value] = res.match.splice 1
     if res.message.user.name.toLowerCase() is channel.toLowerCase()
@@ -62,7 +62,7 @@ module.exports = (robot) ->
         res.send "#{key} removed."
 
   # psn
-  robot.hear /^psn/, (res) ->
+  robot.hear /^!psn/, (res) ->
     options =
       url: "https://support.us.playstation.com/app/answers/detail/a_id/237/~/psn-status%3A-online",
       scripts: ["http://code.jquery.com/jquery.js"],

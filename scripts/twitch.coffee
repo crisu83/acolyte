@@ -8,7 +8,8 @@
 #   -
 #
 # Commands:
-#   -
+#   - !follows - shows a list of people following the channel
+#   - !twitch_auth - shows whether hubot is authenticated with the Twitch API
 #
 # Notes:
 #   -
@@ -75,7 +76,7 @@ module.exports = (robot) ->
     setInterval checkFollows, process.env.HUBOT_TWITCH_FOLLOWS_INTERVAL || 1000 * 60
 
   # follows
-  robot.hear /^follows/, (res) ->
+  robot.hear /^!follows/, (res) ->
     channel = res.message.room.substring 1
     client.follows channel, (error, response, body) ->
       unless error
@@ -89,7 +90,8 @@ module.exports = (robot) ->
       else
         res.reply "I was unable to get a list of the followers."
 
-  robot.hear /^twitch_auth/, (res) ->
+  # twitch_auth
+  robot.hear /^!twitch_auth/, (res) ->
     if robot.adapter.checkAccess res.message.user.name
       channel = res.message.room.substring 1
       token = config.get "#{channel}.access_token"

@@ -9,9 +9,9 @@
 #   -
 #
 # Commands:
-#   xur - Replies with whether or not Xur is at the tower.
-#   ddb <keyword> - Searches http://destinydb.com with the given keyword
-#   dwiki <keyword> - Searches http://destiny.wikia.com with the given keyword
+#   !xur - Replies with whether or not Xur is at the tower.
+#   !ddb <keyword> - Searches http://destinydb.com with the given keyword
+#   !dwiki <keyword> - Searches http://destiny.wikia.com with the given keyword
 #
 # Notes:
 #   -
@@ -27,7 +27,7 @@ module.exports = (robot) ->
   logger = robot.logger
 
   # xur
-  robot.hear /^xur/i, (res) ->
+  robot.hear /^!xur/i, (res) ->
 
     # converts seconds to a human redable "time left" string.
     formatTimeLeft = (seconds) ->
@@ -61,7 +61,7 @@ module.exports = (robot) ->
       res.reply "Xûr arrives at the tower in #{time}."
 
   # ddb
-  robot.hear /^ddb (.*)/i, (res) ->
+  robot.hear /^!ddb (.*)/i, (res) ->
     endpoint = "http://destinydb.com"
     keyword = res.match[1]
     options =
@@ -79,7 +79,7 @@ module.exports = (robot) ->
     jsdom.env options
 
   # dwiki
-  robot.hear /^dwiki (.*)/i, (res) ->
+  robot.hear /^!dwiki (.*)/i, (res) ->
     endpoint = "http://destiny.wikia.com"
     keyword = res.match[1]
     options =
