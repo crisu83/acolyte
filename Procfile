@@ -1,1 +1,1 @@
-web: hubot/bin/hubot -a twitch-adapter -n acolyte_bot --httpd
+web: bin/hubot -a twitch-adapter -n acolyte_bot --httpd
