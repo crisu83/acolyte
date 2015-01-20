@@ -23,12 +23,10 @@ module.exports = (robot) ->
 
   jsdom = require "jsdom"
 
-  checkAccess = robot.adapter.checkAccess
-
   # greet
   robot.enter (res) ->
     channel = res.message.room.substring 1
-    if checkAccess res.message.user.name
+    if robot.adapter.checkAccess res.message.user.name
       res.send "Greetings! I'm Acolyte, your personal Twitch robot. I was created by Calistar to assist you."
     else if robot.adapter.config.get("#{channel}.show_greet") is "on"
       res.send "Hello " + res.message.user.name + "!"
@@ -37,7 +35,7 @@ module.exports = (robot) ->
   robot.hear /^join (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
-    if checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.join "#" + channel
       res.reply "Joining #{channel}"
 
@@ -45,7 +43,7 @@ module.exports = (robot) ->
   robot.hear /^leave (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
-    if checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.part "#" + channel
       res.reply "Leaving #{channel}"
 
