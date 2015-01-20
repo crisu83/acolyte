@@ -1,4 +1,4 @@
 node_modules
+hubot/.hubot_history
 .DS_Store*
-.hubot_history
-config
+hubot_config

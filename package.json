@@ -5,6 +5,7 @@
   "description": "Your personal Twitch robot",
   "scripts": {
     "start": "bin/hubot -a twitch-adapter --name acolyte_bot --httpd"
+    "start": "hubot/bin/hubot -a twitch-adapter --name acolyte_bot --httpd"
   },
   "dependencies": {
     "express": "^4.11.0",
