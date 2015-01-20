@@ -8,7 +8,10 @@
 #   -
 #
 # Commands:
-#   - !psn - Tells you the current status of the PlayStation Network
+#   - join <channel> - Joins a channel
+#   - leave <channel> - Leaves a channel
+#   - config <key> (on|off|remove) - Enables, disabled or removes a configuration
+#   - psn - Tells you the current status of the PlayStation Network
 #
 # Notes:
 #   -
@@ -20,25 +23,29 @@ module.exports = (robot) ->
 
   jsdom = require "jsdom"
 
+  checkAcess = checkAccess
+
   # greet
   robot.enter (res) ->
     channel = res.message.room.substring 1
-    if robot.adapter.checkAccess res.message.user.name
+    if checkAccess res.message.user.name
       res.send "Greetings! I'm Acolyte, your personal Twitch robot. I was created by Calistar to assist you."
     else if robot.adapter.config.get("#{channel}.show_greet") is "on"
       res.send "Hello " + res.message.user.name + "!"
 
+  # join
   robot.hear /^join (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
-    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+    if checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.join "#" + channel
       res.reply "Joining #{channel}"
 
+  # leave
   robot.hear /^leave (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
-    if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
+    if checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.part "#" + channel
       res.reply "Leaving #{channel}"
 
