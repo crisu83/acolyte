@@ -30,8 +30,8 @@ module.exports = (robot) ->
 
   robot.hear /^!ask (.*)/, (res) ->
     query = res.match[1]
-    memory.ask query, (answer) ->
-      if answer
-        res.reply "This is what I know about '#{query}': #{answer}"
-      else
-        res.reply "Unfortunately I don't know anything about #{query}."
+    answer = memory.ask query
+    if answer
+      res.reply "This is what I know about '#{query}': #{answer}"
+    else
+      res.reply "Unfortunately I don't know anything about #{query}."
