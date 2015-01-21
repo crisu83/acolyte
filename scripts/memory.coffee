@@ -34,4 +34,4 @@ module.exports = (robot) ->
     if answer
       res.reply "This is what I know about '#{query}': #{answer}"
     else
-      res.reply "Unfortunately I don't know anything about #{query}."
+      res.reply "Unfortunately I don't know anything about '#{query}'."

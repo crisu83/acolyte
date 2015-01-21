@@ -82,7 +82,7 @@ module.exports = (robot) ->
     jsdom.env options
 
   # time
-  robot.hear /^!time(.*)?/, (res) ->
+  robot.hear /^!time\s?(.*)?/, (res) ->
     map =
       UTC: "UTC"
       # Europe
