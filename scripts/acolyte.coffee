@@ -10,8 +10,8 @@
 # Commands:
 #   - !join <channel> - Joins a channel
 #   - !leave <channel> - Leaves a channel
-#   - !config <key> (on|off|remove) - Enables, disabled or removes a configuration
-#   - !psn - Tells you the current status of the PlayStation Network
+#   - !config <key> (on|off|remove) - Enables/disabled/removes configurations
+#   - !about - Displays the 'about' message
 #
 # Notes:
 #   -
@@ -22,20 +22,23 @@
 module.exports = (robot) ->
 
   jsdom = require "jsdom"
-  moment = require "moment-timezone"
 
   logger = robot.logger
+  config = robot.adapter.config
+
+  about = "I'm Acolyte, your personal Twitch robot. Calistar created me to assist you. For a complete list of commands please visit: http://twitch.tv/calistartv"
 
   # greet
   robot.enter (res) ->
+    username = res.message.user.name
     channel = res.message.room.substring 1
-    if robot.adapter.checkAccess res.message.user.name
-      res.send "Greetings! I'm Acolyte, your personal Twitch robot. I was created by Calistar to assist you."
-    else if robot.adapter.config.get("#{channel}.show_greet") is "on"
-      res.send "Hello " + res.message.user.name + "!"
+    if robot.adapter.checkAccess username
+      res.send "Greetings! #{about}"
+    else if config.get("#{channel}.show_greet") is "on"
+      res.send "Hello #{username}!"
 
-  # acolyte_bot
-  robot.hear /^acolyte_bot$/, (res) ->
+  # robot.name
+  robot.hear new RegExp("/^#{robot.name}$/"), (res) ->
     res.reply "At your service."
 
   # join
@@ -66,42 +69,6 @@ module.exports = (robot) ->
         robot.adapter.config.remove "#{channel}.#{key}"
         res.send "#{key} removed."
 
-  # psn
-  robot.hear /^!psn/, (res) ->
-    options =
-      url: "https://support.us.playstation.com",
-      scripts: ["http://code.jquery.com/jquery.js"],
-      done: (error, window) ->
-        $ = window.$
-        if $("#rn_AnswerText").length > 0
-          $element = $("#rn_AnswerText > p > span[style] > b").first();
-          status = $element.text().toUpperCase() || "ONLINE"
-          res.reply "PSN seems to be #{status}."
-        else
-          res.reply "I'm sorry, I was unable to determine the status of PSN."
-    jsdom.env options
-
-  # time
-  robot.hear /^!time\s?(.*)?/, (res) ->
-    map =
-      UTC: "UTC"
-      # Europe
-      GMT: "UTC"
-      WET: "UTC"
-      CET: "Europe/Berlin"
-      EET: "Europe/Helsinki"
-      MSK: "Europe/Moscow"
-      # US & Canada
-      HST: "Pacific/Honolulu"
-      PST: "America/Los_Angeles"
-      MST: "America/Denver"
-      CST: "America/Chicago"
-      EST: "America/New_York"
-      # Australia
-      AEST: "Australia/Brisbane"
-      ACST: "Australia/Darwin"
-      AWST: "Australia/Perth"
-    abbr = res.match[1]?.toUpperCase() || "UTC"
-    timezone = map[abbr] || "UTC"
-    time = moment.tz(timezone).format "h:mm:ss a"
-    res.reply "The time is #{time} #{abbr}."
+  # about
+  robot.hear /^!about/, (res) ->
+    res.reply about
