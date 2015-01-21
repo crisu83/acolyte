@@ -33,6 +33,10 @@ module.exports = (robot) ->
     else if robot.adapter.config.get("#{channel}.show_greet") is "on"
       res.send "Hello " + res.message.user.name + "!"
 
+  # acolyte_bot
+  robot.hear /^acolyte_bot$/, (res) ->
+    res.reply "At your service."
+
   # join
   robot.hear /^!join (.*)/, (res) ->
     current = res.message.room.substring 1
@@ -64,7 +68,7 @@ module.exports = (robot) ->
   # psn
   robot.hear /^!psn/, (res) ->
     options =
-      url: "https://support.us.playstation.com/app/answers/detail/a_id/237/~/psn-status%3A-online",
+      url: "https://support.us.playstation.com",
       scripts: ["http://code.jquery.com/jquery.js"],
       done: (error, window) ->
         $ = window.$
@@ -75,5 +79,3 @@ module.exports = (robot) ->
         else
           res.reply "I'm sorry, I was unable to determine the status of PSN."
     jsdom.env options
-
-  logger.info "scripts/acolyte.coffee loaded"

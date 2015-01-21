@@ -95,5 +95,3 @@ module.exports = (robot) ->
         else
           res.reply "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
-
-  logger.info "scripts/destiny.coffee loaded"

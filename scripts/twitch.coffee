@@ -81,14 +81,9 @@ module.exports = (robot) ->
     client.follows channel, (error, response, body) ->
       unless error
         users = (item.user.name for item in body.follows)
-        if users.length > MAX_USERS_TO_LIST
-          more = users.length - MAX_USERS_TO_LIST - 1
-          users = users.slice(0, MAX_USERS_TO_LIST)
-          res.reply "This channel is followed by: #{users.join ", "} and #{more} more."
-        else
-          res.reply "This channel is followed by: #{users.join ", "}."
+        res.reply "This channel has #{user.length} followers."
       else
-        res.reply "I was unable to get a list of the followers."
+        res.reply "I was unable to determine the number of followers."
 
   # twitch_auth
   robot.hear /^!twitch_auth/, (res) ->
@@ -100,5 +95,3 @@ module.exports = (robot) ->
           res.reply "I'm authenticated with Twitch."
         else
           res.reply "I'm not authenticated with Twitch."
-
-  logger.info "scripts/twitch.coffee loaded"
