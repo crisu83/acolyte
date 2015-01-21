@@ -22,6 +22,7 @@
 module.exports = (robot) ->
 
   jsdom = require "jsdom"
+  moment = require "moment-timezone"
 
   logger = robot.logger
 
@@ -79,3 +80,28 @@ module.exports = (robot) ->
         else
           res.reply "I'm sorry, I was unable to determine the status of PSN."
     jsdom.env options
+
+  # time
+  robot.hear /^!time(.*)?/, (res) ->
+    map =
+      UTC: "UTC"
+      # Europe
+      GMT: "UTC"
+      WET: "UTC"
+      CET: "Europe/Berlin"
+      EET: "Europe/Helsinki"
+      MSK: "Europe/Moscow"
+      # US & Canada
+      HST: "Pacific/Honolulu"
+      PST: "America/Los_Angeles"
+      MST: "America/Denver"
+      CST: "America/Chicago"
+      EST: "America/New_York"
+      # Australia
+      AEST: "Australia/Brisbane"
+      ACST: "Australia/Darwin"
+      AWST: "Australia/Perth"
+    abbr = res.match[1]?.toUpperCase() || "UTC"
+    timezone = map[abbr] || "UTC"
+    time = moment.tz(timezone).format "h:mm:ss a"
+    res.reply "The time is #{time} #{abbr}."
