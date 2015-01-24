@@ -3,9 +3,9 @@
     <h3 class="masthead-brand"><a ng-href="#/">Acolyte</a></h3>
     <nav>
       <ul class="nav masthead-nav" ng-cloak>
-        <li><a ng-hide="user" ng-href="#/login" target="_self">Login</a></li>
+        <li><a ng-hide="user" ng-href="#/index">Login</a></li>
         <li><a ng-show="user" ng-href="#/settings">{{ user.name }}</a></li>
-        <li><a ng-show="user" ng-href="#/logout" title="Logout" target="_self"><span class="glyphicon glyphicon-off"></span></a></li>
+        <li><a ng-show="user" ng-href="#/logout" title="Logout"><span class="glyphicon glyphicon-off"></span></a></li>
       </ul>
     </nav>
   </div>
