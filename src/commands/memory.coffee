@@ -1,8 +1,6 @@
-Memory = require "../utils/memory.coffee"
+module.exports = (robot, utils) ->
 
-module.exports = (robot, config) ->
-
-  memory = new Memory robot
+  memory = utils.memory
 
   # command: !tell <thing>
   robot.hear /^!tell (.*)/, (res) ->

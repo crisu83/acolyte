@@ -1,8 +1,9 @@
 jsdom = require "jsdom"
 
-module.exports = (robot, config) ->
+module.exports = (robot, utils) ->
 
   logger = robot.logger
+  config = utils.config
 
   about = "I'm Acolyte, your personal Twitch robot. Calistar created me to assist you. For a complete list of commands please visit: http://twitch.tv/calistartv"
 
@@ -10,9 +11,10 @@ module.exports = (robot, config) ->
   robot.enter (res) ->
     username = res.message.user.name
     channel = res.message.room.substring 1
+    settings = config.get channel
     if robot.adapter.checkAccess username
       res.send "Greetings! #{about}"
-    else if config.get("#{channel}.show_greet") is "on"
+    else if settings.show_greet
       res.send "Hello #{username}!"
 
   # command: #{robot.name}
@@ -34,18 +36,6 @@ module.exports = (robot, config) ->
     if robot.adapter.checkAccess(res.message.user.name) and current.toLowerCase() isnt channel.toLowerCase()
       robot.adapter.part "#" + channel
       res.reply "Leaving #{channel}"
-
-  # command: !config
-  robot.hear /^!config ([\w_]+) (on|off|remove)/i, (res) ->
-    channel = res.message.room.substring 1
-    [key, value] = res.match.splice 1
-    if res.message.user.name.toLowerCase() is channel.toLowerCase()
-      unless value is "remove"
-        robot.adapter.config.set "#{channel}.#{key}", value
-        res.send "#{key} is now #{value}."
-      else
-        robot.adapter.config.remove "#{channel}.#{key}"
-        res.send "#{key} removed."
 
   # about
   robot.hear /^!about/, (res) ->

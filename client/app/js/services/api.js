@@ -8,12 +8,31 @@ angular.module('acolyte')
     }
 
     function getTwitchToken(code) {
-      return $http.post('/api/twitch/token', {code: code});
+      return $http.post('/api/twitch/token', {
+        code: code
+      });
+    }
+
+    function getUserSettings(username) {
+      return $http.get('/api/settings', {
+        params: {
+          username: username
+        }
+      });
+    }
+
+    function setUserSettings(username, settings) {
+      return $http.post('/api/settings', {
+        username: username,
+        settings: settings
+      });
     }
 
     return {
       getTwitchAuthUrl: getTwitchAuthUrl,
-      getTwitchToken: getTwitchToken
+      getTwitchToken: getTwitchToken,
+      getUserSettings: getUserSettings,
+      setUserSettings: setUserSettings
     };
 
   });

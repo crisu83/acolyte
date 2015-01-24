@@ -1,9 +1,10 @@
 <div class="masthead clearfix">
   <div class="inner">
     <h3 class="masthead-brand"><a ng-href="#/">Acolyte</a></h3>
+    <div class="masthead-loader" ng-show="loading" ng-include="'partials/_spinner.html'"></div>
     <nav>
       <ul class="nav masthead-nav" ng-cloak>
-        <li><a ng-hide="user" ng-href="#/index">Login</a></li>
+        <li><a ng-hide="user" ng-href="#/login">Login</a></li>
         <li><a ng-show="user" ng-href="#/settings">{{ user.name }}</a></li>
         <li><a ng-show="user" ng-href="#/logout" title="Logout"><span class="glyphicon glyphicon-off"></span></a></li>
       </ul>

@@ -1,23 +1,18 @@
 express = require "express"
 
-module.exports = (robot) ->
+module.exports = (robot, utils) ->
 
-  logger = robot.logger
-  router = robot.router
   twitch = robot.adapter.twitchClient
+  {logger, router} = robot
+  {config, keyring} = utils
 
   # static
   router.use express.static("#{__dirname}/../client/public")
 
-  # acolyte config
-  router.get "/api/config", (req, res) ->
-    token = req.param "token"
-    client.me token, (error, response, body) ->
-      # todo: implement this
-
   # twitch authenticaiton url
   router.post "/api/twitch/authUrl", (req, res) ->
     data =
+      success: true
       url: twitch.getAuthUrl()
     res.send data
 
@@ -34,15 +29,34 @@ module.exports = (robot) ->
         logger.debug "body=#{JSON.stringify body}"
         twitch.me token, (error, response, body) ->
           logger.debug "body=#{JSON.stringify body}"
-          username = body.name
-          # todo: save this somewhere else
-          #config.set "#{username}.access_token", token
-          #logger.info "AUTH: access token #{token} stored for #{username}"
+          keyring.add body.name, token
           data =
-            name: username
+            success: true
+            user: body
             scope: scope
             token: token
           res.send data
     else
       error = req.param "error"
-      res.send "ERROR: #{error}"
+      data =
+        success: false
+        error: error
+      res.send data
+
+  # get config
+  router.get "/api/settings", (req, res) ->
+    username = req.param "username"
+    settings = config.get(username) || {}
+    data =
+      success: true
+      settings: settings
+    res.send data
+
+  # save config
+  router.post "/api/settings", (req, res) ->
+    username = req.param "username"
+    settings = req.param "settings"
+    config.set username, settings
+    data =
+      success: true
+    res.send data

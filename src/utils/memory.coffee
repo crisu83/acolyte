@@ -5,7 +5,6 @@ class Memory
   STORAGE_KEY: "acolyte.memory"
 
   constructor: (@robot) ->
-    @logger = @robot.logger
     @index = lunr ->
       @ref "id"
       @field "body"
@@ -18,7 +17,7 @@ class Memory
     for item in data
       @index.add item
       num++
-    @logger.info "MEMORY: Recalled #{num} things"
+    @robot.logger.info "MEMORY: Recalled #{num} things"
 
   tell: (thing) ->
     data = @load()
@@ -26,14 +25,14 @@ class Memory
     @index.add item
     data[item.id] = item.body
     unless @save data
-      @logger.error "ERROR: Failed to learn a new thing."
-    @logger.info "MEMORY: Learned that '#{thing}' (#{item.id})"
+      @robot.logger.error "ERROR: Failed to learn a new thing."
+    @robot.logger.info "MEMORY: Learned that '#{thing}' (#{item.id})"
 
   ask: (query) ->
     data = @load()
-    @logger.info "MEMORY: Trying to answer '#{query}'"
+    @robot.logger.info "MEMORY: Trying to answer '#{query}'"
     result = @index.search query
-    @logger.debug "result=#{JSON.stringify result} data=#{JSON.stringify data}"
+    @robot.logger.debug "result=#{JSON.stringify result} data=#{JSON.stringify data}"
     if result.length isnt 0
       items = []
       for match in result
@@ -41,10 +40,10 @@ class Memory
       items.sort (a, b) ->
         a.time - b.time
       answer = items[0]
-      @logger.info "MEMORY: Found answer '#{answer}' to question '#{query}'"
+      @robot.logger.info "MEMORY: Found answer '#{answer}' to question '#{query}'"
       answer
     else
-      @logger.info "MEMORY: Could not answer question '#{query}'"
+      @robot.logger.info "MEMORY: Could not answer question '#{query}'"
       null
 
   createItem: (thing) ->

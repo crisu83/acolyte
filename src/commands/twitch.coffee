@@ -1,23 +1,25 @@
-module.exports = (robot, config) ->
+module.exports = (robot, utils) ->
 
   MAX_USERS_TO_LIST = 20
 
   client = robot.adapter.twitchClient
   logger = robot.logger
+  {config, keyring, vault} = utils
 
   # event: enter
   robot.enter (res) ->
     channel = res.message.room.substring 1
+    settings = config.get channel
 
     checkFollows = () ->
-      if config.get("#{channel}.show_follows") is "on"
+      if settings.show_follows
         logger.info "Checking for new follows in #{channel} ..."
         client.follows channel, (error, response, body) ->
           unless error
             num = body._total
-            oldNum = config.get "#{channel}.num_follows"
+            oldNum = vault.get channel, "num_follows"
             if num > oldNum or oldNum is undefined
-              config.set "#{channel}.num_follows", num
+              vault.set channel, "num_follows", num
               if body.follows.length isnt 0 and oldNum isnt undefined
                 nick = body.follows[0].user.name
                 logger.info "New follower found: #{nick}"
@@ -39,7 +41,7 @@ module.exports = (robot, config) ->
   robot.hear /^!twitch_auth/, (res) ->
     if robot.adapter.checkAccess res.message.user.name
       channel = res.message.room.substring 1
-      token = config.get "#{channel}.access_token"
+      token = keyring.get channel
       client.me token, (error, response, body) ->
         unless error
           res.reply "I'm authenticated with Twitch."

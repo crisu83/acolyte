@@ -20,8 +20,9 @@ angular.module('acolyte')
     var dfd = $q.defer();
     apiService.getTwitchToken(code)
       .success(function (data) {
-        localStorageService.set('user', data);
-        dfd.resolve(data);
+        var user = data.user;
+        localStorageService.set('user', user);
+        dfd.resolve(user);
       })
       .error(function (error) {
         dfd.reject(error);

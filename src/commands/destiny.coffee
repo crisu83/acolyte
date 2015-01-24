@@ -1,7 +1,7 @@
 moment = require "moment"
 jsdom = require "jsdom"
 
-module.exports = (robot, config) ->
+module.exports = (robot, utils) ->
 
   logger = robot.logger
 

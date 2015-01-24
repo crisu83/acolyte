@@ -3,25 +3,24 @@ class Config
 
   constructor: (@robot) ->
 
-  get: (key) ->
+  get: (channel) ->
     data = @load()
-    value = data[key]
-    @robot.logger.info "CONFIG: Get #{@STORAGE_KEY}.#{key} (#{value})"
-    value
+    config = data[channel] || {}
+    @robot.logger.info "CONFIG: Get config for #{channel} (#{JSON.stringify config})"
+    config
 
-  set: (key, value) ->
+  set: (channel, config) ->
     data = @load()
-    old = data[key]
-    data[key] = value
+    data[channel] = config
     unless @save data
       @robot.logger.error "ERROR: Failed to save config."
-    @robot.logger.info "CONFIG: Set #{@STORAGE_KEY}.#{key} = #{value} (#{old})"
+    @robot.logger.info "CONFIG: Update config for #{channel} (#{JSON.stringify config})"
 
-  remove: (key) ->
+  remove: (channel) ->
     data = @load()
-    value = data[key]
-    delete data[key]
-    @robot.logger.info "CONFIG: Remove #{@STORAGE_KEY}.#{key} (#{value})"
+    config = data[channel]
+    delete data[channel]
+    @robot.logger.info "CONFIG: Remove config for #{channel} (#{JSON.stringify config})"
 
   load: ->
     @robot.brain[@STORAGE_KEY] || {}
