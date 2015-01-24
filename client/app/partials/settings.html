@@ -1,0 +1,17 @@
+<div class="settings">
+  <h1 class="cover-heading">Settings</h1>
+  <p class="lead">Personalize your bot.</p>
+  <div class="setting-container">
+    <form method="post" action="#" auto-save-form="save()">
+      <div class="setting-control">
+        <label for="show_greet">Greet Visitors</label>
+        <toggle-switch ng-model="config.show_greet" id="show_greet"></toggle-switch>
+      </div>
+      <div class="setting-control">
+        <label for="show_follows">Show Follows</label>
+        <toggle-switch ng-model="config.show_follows" id="show_follows"></toggle-switch>
+      </div>
+    </form>
+    <div ng-show="loading" ng-include="'partials/_preloader.html'"></div>
+  </div>
+</div>

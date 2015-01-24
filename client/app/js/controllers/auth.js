@@ -1,22 +1,16 @@
 'use strict';
 
 angular.module('acolyte')
-.controller('AuthCtrl', function ($scope, hubotService) {
+  .controller('AuthCtrl', function ($scope, $rootScope, $timeout, $routeParams, $location, authService) {
 
-  var url = '';
-  var scope = 'user_read';
+    if ($routeParams.code) {
+      authService.login($routeParams.code)
+        .then(function (data) {
+          $rootScope.user = data;
+          $location.path('/');
+        }, function (error) {
+          console.log('ERROR: ' + error);
+        });
+    }
 
-  hubotService.auth()
-    .success(function (data) {
-      $scope.AuthCtrl.url = data.url + '&scope=' + scope;
-    })
-    .error(function (error, data) {
-      console.log('ERROR: ' + error);
-    });
-
-  $scope.AuthCtrl = {
-    url: url,
-    scope: scope
-  };
-
-});
+  });

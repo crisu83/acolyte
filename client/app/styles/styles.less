@@ -10,14 +10,49 @@ body {
 
 // --- Layout ---
 
-.main {
-  padding-top: 80px;
+.acolyte-icon {
+  margin: 0 auto 30px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  width: 144px;
+  height: 144px;
+  font-size: 108px;
+  line-height: 140px;
+  display: block;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  cursor: default;
 }
 
-.index-ctrl {
-  text-align: center;
+.settings {
+  .setting-container {
+    margin: auto;
+    width: 320px;
+  }
+
+  .setting-control {
+    .clearfix();
+    margin-bottom: 5px;
+
+    label {
+      display: block;
+      float: left;
+      margin: 5px 0;
+    }
+
+    .toggle-switch {
+      float: right;
+    }
+  }
 }
 
-.auth-ctrl {
-  text-align: center;
+// -- Widgets ---
+
+.toggle-switch {
+  text-shadow: none;
+
+  .switch-left {
+    background: #222 !important;
+  }
 }

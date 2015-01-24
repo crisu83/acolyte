@@ -5,7 +5,7 @@ module.exports = function (grunt, options) {
         {
           expand: true,
           cwd: 'bower_components',
-          src: ['bootstrap/fonts/*.{eot,svg,ttf,woff}'],
+          src: ['bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}'],
           dest: '<%= buildRoot %>/assets',
           filter: 'isFile'
         }

@@ -6,7 +6,7 @@
   <meta name="description" content=""/>
   <link rel="stylesheet" href="css/styles.css"/>
 </head>
-<body ng-controller="MainCtrl">
+<body>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">
@@ -15,7 +15,17 @@
 </p>
 <![endif]-->
 
-<div ng-view></div>
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
+      <div ng-include="'partials/_masthead.html'"></div>
+      <div class="inner cover">
+        <div ng-view></div>
+      </div>
+      <div ng-include="'partials/_mastfoot.html'"></div>
+    </div>
+  </div>
+</div>
 
 <script src="js/vendor.js"></script>
 <script src="js/scripts.js"></script>
