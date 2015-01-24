@@ -1,61 +1,11 @@
-# Description
-#   Twitch specific logic.
-#
-# Dependencies:
-#   - "express": "^4.11.0"
-#
-# Configuration:
-#   -
-#
-# Commands:
-#   - !follows - shows a list of people following the channel
-#   - !twitch_auth - shows whether hubot is authenticated with the Twitch API
-#
-# Notes:
-#   -
-#
-# Author:
-#   crisu83
-
-module.exports = (robot) ->
+module.exports = (robot, config) ->
 
   MAX_USERS_TO_LIST = 20
 
-  express = require "express"
-
-  config = robot.adapter.config
   client = robot.adapter.twitchClient
   logger = robot.logger
 
-  # api
-  robot.router.use express.static("#{__dirname}/../client/public")
-
-  robot.router.post "/api/twitch/init", (req, res) ->
-    data =
-      url: client.getAuthUrl()
-    res.send data
-
-  robot.router.get "/api/twitch/auth", (req, res) ->
-    code = req.param "code"
-    if code
-      logger.info "AUTH: received code #{code}"
-      client.auth code, (error, response, body) =>
-        logger.debug "body=#{JSON.stringify body}"
-        token = body.access_token
-        scope = body.scope
-        logger.info "AUTH: received token #{token} with scope #{scope}"
-        logger.debug "body=#{JSON.stringify body}"
-        client.me token, (error, response, body) ->
-          logger.debug "body=#{JSON.stringify body}"
-          channel = body.name
-          config.set "#{channel}.access_token", token
-          logger.info "AUTH: access token #{token} stored for #{channel}"
-      res.send "SUCCESS"
-    else
-      error = req.param "error"
-      res.send "ERROR: #{error}"
-
-  # show follows
+  # event: enter
   robot.enter (res) ->
     channel = res.message.room.substring 1
 
@@ -75,7 +25,7 @@ module.exports = (robot) ->
 
     setInterval checkFollows, process.env.HUBOT_TWITCH_FOLLOWS_INTERVAL || 1000 * 60
 
-  # follows
+  # command: !follows
   robot.hear /^!follows/, (res) ->
     channel = res.message.room.substring 1
     client.follows channel, (error, response, body) ->
@@ -85,7 +35,7 @@ module.exports = (robot) ->
       else
         res.reply "I was unable to determine the number of followers."
 
-  # twitch_auth
+  # command: !twitch_auth
   robot.hear /^!twitch_auth/, (res) ->
     if robot.adapter.checkAccess res.message.user.name
       channel = res.message.room.substring 1

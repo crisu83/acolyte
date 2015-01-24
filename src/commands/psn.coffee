@@ -1,28 +1,10 @@
-# Description
-#   Playstation Network specific commands.
-#
-# Dependencies:
-#   - "jsdom": "^2.0.0"
-#
-# Configuration:
-#   -
-#
-# Commands:
-#   - !psn - Tells you the current status of the PlayStation Network
-#
-# Notes:
-#   -
-#
-# Author:
-#   crisu83
+jsdom = require "jsdom"
 
 module.exports = (robot) ->
 
-  jsdom = require "jsdom"
-
   logger = robot.logger
 
-  # psn
+  # command !psn
   robot.hear /^!psn/, (res) ->
     options =
       url: "https://support.us.playstation.com",

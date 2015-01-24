@@ -1,28 +1,10 @@
-# Description
-#   Time telling script with support for commonly used timezones.
-#
-# Dependencies:
-#   - "moment-timezone": "^0.3.0"
-#
-# Configuration:
-#   -
-#
-# Commands:
-#   - !time <timezome> tells the time in the given timezone
-#
-# Notes:
-#   -
-#
-# Author:
-#   crisu83
+moment = require "moment-timezone"
 
-module.exports = (robot) ->
-
-  moment = require "moment-timezone"
+module.exports = (robot, config) ->
 
   logger = robot.logger
 
-  # time
+  # command: !time (<timezone>)
   robot.hear /^!time\s?(.*)?/, (res) ->
     map =
       UTC: "UTC"

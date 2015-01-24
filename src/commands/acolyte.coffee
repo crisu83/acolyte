@@ -1,34 +1,12 @@
-# Description
-#   Personality of Acolyte.
-#
-# Dependencies:
-#   - "jsdom": "^2.0.0"
-#
-# Configuration:
-#   -
-#
-# Commands:
-#   - !join <channel> - Joins a channel
-#   - !leave <channel> - Leaves a channel
-#   - !config <key> (on|off|remove) - Enables/disabled/removes configurations
-#   - !about - Displays the 'about' message
-#
-# Notes:
-#   -
-#
-# Author:
-#   crisu83
+jsdom = require "jsdom"
 
-module.exports = (robot) ->
-
-  jsdom = require "jsdom"
+module.exports = (robot, config) ->
 
   logger = robot.logger
-  config = robot.adapter.config
 
   about = "I'm Acolyte, your personal Twitch robot. Calistar created me to assist you. For a complete list of commands please visit: http://twitch.tv/calistartv"
 
-  # greet
+  # event: enter
   robot.enter (res) ->
     username = res.message.user.name
     channel = res.message.room.substring 1
@@ -37,11 +15,11 @@ module.exports = (robot) ->
     else if config.get("#{channel}.show_greet") is "on"
       res.send "Hello #{username}!"
 
-  # robot.name
+  # command: #{robot.name}
   robot.hear new RegExp("/^#{robot.name}$/"), (res) ->
     res.reply "At your service."
 
-  # join
+  # command: !join
   robot.hear /^!join (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
@@ -49,7 +27,7 @@ module.exports = (robot) ->
       robot.adapter.join "#" + channel
       res.reply "Joining #{channel}"
 
-  # leave
+  # command: !leave
   robot.hear /^!leave (.*)/, (res) ->
     current = res.message.room.substring 1
     channel = res.match[1]
@@ -57,7 +35,7 @@ module.exports = (robot) ->
       robot.adapter.part "#" + channel
       res.reply "Leaving #{channel}"
 
-  # config
+  # command: !config
   robot.hear /^!config ([\w_]+) (on|off|remove)/i, (res) ->
     channel = res.message.room.substring 1
     [key, value] = res.match.splice 1

@@ -1,32 +1,11 @@
-# Description
-#   Destiny specific logic.
-#
-# Dependencies:
-#   - "moment": "^2.9.0"
-#   - "jsdom": "^2.0.0"
-#
-# Configuration:
-#   -
-#
-# Commands:
-#   !xur - Replies with whether or not Xur is at the tower.
-#   !ddb <keyword> - Searches http://destinydb.com with the given keyword
-#   !dwiki <keyword> - Searches http://destiny.wikia.com with the given keyword
-#
-# Notes:
-#   -
-#
-# Author:
-#   crisu83
+moment = require "moment"
+jsdom = require "jsdom"
 
-module.exports = (robot) ->
-
-  moment = require "moment"
-  jsdom = require "jsdom"
+module.exports = (robot, config) ->
 
   logger = robot.logger
 
-  # xur
+  # command: !xur
   robot.hear /^!xur/i, (res) ->
 
     # converts seconds to a human redable "time left" string.
@@ -53,14 +32,14 @@ module.exports = (robot) ->
     arrival = moment.utc().day(5).hours(9).minutes(0).seconds(0)
     departure = moment.utc().day(7).hours(9).minutes(0).seconds(0)
 
-    if now.isAfter arrival and now.isBefore departure
+    if now > arrival and now < departure
       time = formatTimeLeft(Math.abs(now - departure) / 1000)
       res.reply "Xûr is in the tower and depatures in #{time}."
     else
       time = formatTimeLeft(Math.abs(now - arrival) / 1000)
       res.reply "Xûr arrives at the tower in #{time}."
 
-  # ddb
+  # command: !ddb
   robot.hear /^!ddb (.*)/i, (res) ->
     endpoint = "http://destinydb.com"
     keyword = res.match[1]
@@ -78,7 +57,7 @@ module.exports = (robot) ->
           res.reply "I'm sorry, I was unable to find anything with '#{keyword}'."
     jsdom.env options
 
-  # dwiki
+  # command: !dwiki
   robot.hear /^!dwiki (.*)/i, (res) ->
     endpoint = "http://destiny.wikia.com"
     keyword = res.match[1]
