@@ -4,11 +4,15 @@
   <div class="setting-container">
     <form name="settings-form" auto-save-form="save" novalidate>
       <div class="setting-control">
-        <label for="show_greet">Greet Visitors</label>
+        <label for="show_greet">
+          Greet <small>Welcomes channel visitors</small>
+        </label>
         <toggle-switch ng-model="settings.show_greet" id="show_greet"></toggle-switch>
       </div>
       <div class="setting-control">
-        <label for="show_follows">Show Follows</label>
+        <label for="show_follows">
+          Follows <small>Compliments new followers</small>
+        </label>
         <toggle-switch ng-model="settings.show_follows" id="show_follows"></toggle-switch>
       </div>
     </form>

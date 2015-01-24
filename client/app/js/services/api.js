@@ -3,6 +3,18 @@
 angular.module('acolyte')
   .factory('apiService', function ($http) {
 
+    function dumpMemory() {
+      return $http.get('/api/memory');
+    }
+
+    function deleteMemoryEntry(id) {
+      return $http.delete('/api/memory', {
+        params: {
+          id: id
+        }
+      });
+    }
+
     function getTwitchAuthUrl() {
       return $http.post('/api/twitch/authUrl');
     }
@@ -29,6 +41,8 @@ angular.module('acolyte')
     }
 
     return {
+      dumpMemory: dumpMemory,
+      deleteMemoryEntry: deleteMemoryEntry,
       getTwitchAuthUrl: getTwitchAuthUrl,
       getTwitchToken: getTwitchToken,
       getUserSettings: getUserSettings,

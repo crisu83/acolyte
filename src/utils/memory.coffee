@@ -46,6 +46,15 @@ class Memory
       @robot.logger.info "MEMORY: Could not answer question '#{query}'"
       null
 
+  forget: (id) ->
+    data = @load()
+    @index.remove id
+    item = data[id]
+    delete data[id]
+    @robot.logger.info "MEMORY: Forgot '#{item.body}' (#{item.id})"
+    true
+
+
   createItem: (thing) ->
     item =
       id: shortid.generate()

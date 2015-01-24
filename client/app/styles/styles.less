@@ -10,6 +10,10 @@ body {
 
 // --- Layout ---
 
+a[ng-click] {
+  cursor: pointer;
+}
+
 .masthead > .inner {
   position: relative;
 }
@@ -36,6 +40,8 @@ body {
   cursor: default;
 }
 
+// -- Controllers --
+
 .settings {
   .setting-container {
     margin: auto;
@@ -49,7 +55,14 @@ body {
     label {
       display: block;
       float: left;
-      margin: 5px 0;
+      line-height: 16px;
+      text-align: left;
+
+      & > small {
+        color: #888;
+        display: block;
+        font-weight: normal;
+      }
     }
 
     .toggle-switch {

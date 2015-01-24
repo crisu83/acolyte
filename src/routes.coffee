@@ -4,17 +4,17 @@ module.exports = (robot, utils) ->
 
   twitch = robot.adapter.twitchClient
   {logger, router} = robot
-  {config, keyring} = utils
+  {config, keyring, memory} = utils
 
   # static
   router.use express.static("#{__dirname}/../client/public")
 
   # twitch authenticaiton url
   router.post "/api/twitch/authUrl", (req, res) ->
-    data =
+    json =
       success: true
       url: twitch.getAuthUrl()
-    res.send data
+    res.send json
 
   # twitch authentication callback
   router.post "/api/twitch/token", (req, res) ->
@@ -30,33 +30,49 @@ module.exports = (robot, utils) ->
         twitch.me token, (error, response, body) ->
           logger.debug "body=#{JSON.stringify body}"
           keyring.add body.name, token
-          data =
+          json =
             success: true
             user: body
             scope: scope
             token: token
-          res.send data
+          res.send json
     else
       error = req.param "error"
-      data =
+      json =
         success: false
         error: error
-      res.send data
+      res.send json
 
   # get config
   router.get "/api/settings", (req, res) ->
     username = req.param "username"
     settings = config.get(username) || {}
-    data =
+    json =
       success: true
       settings: settings
-    res.send data
+    res.send json
 
   # save config
   router.post "/api/settings", (req, res) ->
     username = req.param "username"
     settings = req.param "settings"
     config.set username, settings
-    data =
+    json =
       success: true
-    res.send data
+    res.send json
+
+  # get memory
+  router.get "/api/memory", (req, res) ->
+    data = memory.load()
+    json =
+      success: true,
+      memory: data
+    res.send json
+
+  # delete memory
+  router.delete "/api/memory", (req, res) ->
+    id = req.param "id"
+    data = memory.forget id
+    json =
+      success: true
+    res.send json

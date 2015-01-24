@@ -1,0 +1,12 @@
+<div class="memory">
+  <h1 class="cover-heading">Memory</h1>
+  <p class="lead">This is what I know.</p>
+  <div class="memory-container">
+    <ul class="list-unstyled">
+      <li ng-repeat="(key, value) in memory">
+        {{ value }}
+        <a ng-click="deleteEntry(key)" title="Delete">&times;</a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -50,6 +50,11 @@ angular.module('acolyte', [
       }
     });
 
+    $routeProvider.when('/memory', {
+      templateUrl: 'partials/memory.html',
+      controller: 'MemoryCtrl'
+    });
+
     $routeProvider.otherwise({redirectTo: '/'});
   })
   .run(function ($rootScope, $location, authService) {
