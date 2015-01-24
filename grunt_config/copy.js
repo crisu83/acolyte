@@ -49,7 +49,7 @@ module.exports = function (grunt, options) {
         {
           expand: true,
           cwd: '<%= appRoot %>',
-          src: ['robots.txt'],
+          src: ['favicon.ico', 'robots.txt'],
           dest: '<%= buildRoot %>',
           filter: 'isFile'
         }
