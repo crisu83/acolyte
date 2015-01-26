@@ -25,6 +25,9 @@ module.exports = (robot, config) ->
       ACST: "Australia/Darwin"
       AWST: "Australia/Perth"
     abbr = res.match[1]?.toUpperCase() || "UTC"
-    timezone = map[abbr] || "UTC"
-    time = moment.tz(timezone).format "h:mm:ss a"
-    res.reply "The time is #{time} #{abbr}."
+    if map[abbr]
+      timezone = map[abbr]
+      time = moment.tz(timezone).format "h:mm:ss a"
+      res.reply "The time is #{time} #{abbr}."
+    else
+      res.reply "I'm sorry, I'm unaware of that timezone."
