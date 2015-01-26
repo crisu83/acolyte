@@ -11,7 +11,9 @@ angular.module('acolyte')
           apiService.getStatus(user.name, token)
           .success(function (data) {
             loaderService.done();
-            $scope.status = data.status;
+            if (data.success) {
+              $scope.status = data.status;
+            }
           })
           .error(function (data) {
             loaderService.done();
@@ -27,7 +29,9 @@ angular.module('acolyte')
           apiService.joinChannel(user.name, token)
           .success(function (data) {
             loaderService.done();
-            $scope.status = data.status;
+            if (data.success) {
+              $scope.status = data.status;
+            }
           })
           .error(function (data) {
             loaderService.done();
@@ -43,7 +47,9 @@ angular.module('acolyte')
           apiService.partChannel(user.name, token)
           .success(function (data) {
             loaderService.done();
-            $scope.status = data.status;
+            if (data.success) {
+              $scope.status = data.status;
+            }
           })
           .error(function (data) {
             loaderService.done();

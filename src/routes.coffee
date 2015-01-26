@@ -48,10 +48,10 @@ module.exports = (robot, utils) ->
     channel = req.param "channel"
     token = req.param "token"
     if keyring.validate channel, token
-      status = robot.adapter.active channel
+      status = robot.adapter.active '#' + channel
       json =
+        success: true
         status: status
-      console.log json
     else
       json =
         success: false
