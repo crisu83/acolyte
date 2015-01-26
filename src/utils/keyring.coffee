@@ -22,6 +22,14 @@ class Keyring
     delete data[username]
     @robot.logger.info "KEYRING: Remove token for #{username} (#{token})"
 
+  validate: (username, token) ->
+    data = @load()
+    result = false
+    if token and data[username]
+      result = token is data[username]
+    @robot.logger.info "KEYRING: Validate token #{token} for #{username} (#{result})"
+    result
+
   load: ->
     @robot.brain[@STORAGE_KEY] || {}
 

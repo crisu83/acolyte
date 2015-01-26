@@ -4,9 +4,21 @@
     <div class="masthead-loader" ng-show="loading" ng-include="'partials/_spinner.html'"></div>
     <nav>
       <ul class="nav masthead-nav" ng-cloak>
-        <li><a ng-hide="user" ng-href="#">Login</a></li>
-        <li><a ng-show="user" ng-href="#/settings">{{ user.name }}</a></li>
-        <li><a ng-show="user" ng-href="#/logout" title="Logout"><span class="glyphicon glyphicon-off"></span></a></li>
+        <li ng-hide="user">
+          <a ng-href="#/login">Login</a>
+        </li>
+        <li ng-show="user">
+          <a ng-href="#/dashboard">{{ user.name }}</a>
+        </li>
+        <li ng-show="user && !status">
+          <a class="nav-join" ng-click="join()"><span class="glyphicon glyphicon-flash"></span></a>
+        </li>
+        <li ng-show="user && status">
+          <a class="nav-part" ng-click="part()"><span class="glyphicon glyphicon-flash"></span></a>
+        </li>
+        <li ng-show="user">
+          <a ng-href="#/logout" title="Logout"><span class="glyphicon glyphicon-off"></span></a>
+        </li>
       </ul>
     </nav>
   </div>

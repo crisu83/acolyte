@@ -3,6 +3,29 @@
 angular.module('acolyte')
   .factory('apiService', function ($http) {
 
+    function getStatus(channel, token) {
+      return $http.get('/api/status', {
+        params: {
+          channel: channel,
+          token: token
+        }
+      });
+    }
+
+    function joinChannel(channel, token) {
+      return $http.post('/api/join', {
+        channel: channel,
+        token: token
+      });
+    }
+
+    function partChannel(channel, token) {
+      return $http.post('/api/part', {
+        channel: channel,
+        token: token
+      });
+    }
+
     function dumpMemory() {
       return $http.get('/api/memory');
     }
@@ -25,28 +48,33 @@ angular.module('acolyte')
       });
     }
 
-    function getUserSettings(username) {
+    function getChannelSettings(channel, token) {
       return $http.get('/api/settings', {
         params: {
-          username: username
+          channel: channel,
+          token: token
         }
       });
     }
 
-    function setUserSettings(username, settings) {
+    function setChannelSettings(channel, token, settings) {
       return $http.post('/api/settings', {
-        username: username,
+        channel: channel,
+        token: token,
         settings: settings
       });
     }
 
     return {
+      getStatus: getStatus,
+      joinChannel: joinChannel,
+      partChannel: partChannel,
       dumpMemory: dumpMemory,
       deleteMemoryEntry: deleteMemoryEntry,
       getTwitchAuthUrl: getTwitchAuthUrl,
       getTwitchToken: getTwitchToken,
-      getUserSettings: getUserSettings,
-      setUserSettings: setUserSettings
+      getChannelSettings: getChannelSettings,
+      setChannelSettings: setChannelSettings
     };
 
   });

@@ -25,6 +25,10 @@ a[ng-click] {
   top: 0;
 }
 
+.nav-join > .glyphicon-flash {
+  opacity: .3;
+}
+
 .acolyte-icon {
   margin: 0 auto 30px;
   background-color: transparent;
@@ -42,31 +46,31 @@ a[ng-click] {
 
 // -- Controllers --
 
-.settings {
-  .setting-container {
+.dashboard {
+  .settings {
     margin: auto;
     width: 320px;
-  }
 
-  .setting-control {
-    .clearfix();
-    margin-bottom: 5px;
+    .setting-control {
+      .clearfix();
+      margin-bottom: 5px;
 
-    label {
-      display: block;
-      float: left;
-      line-height: 16px;
-      text-align: left;
-
-      & > small {
-        color: #888;
+      label {
         display: block;
-        font-weight: normal;
-      }
-    }
+        float: left;
+        line-height: 16px;
+        text-align: left;
 
-    .toggle-switch {
-      float: right;
+        & > small {
+          color: #888;
+          display: block;
+          font-weight: normal;
+        }
+      }
+
+      .toggle-switch {
+        float: right;
+      }
     }
   }
 }

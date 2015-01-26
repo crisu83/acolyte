@@ -14,9 +14,8 @@ angular.module('acolyte', [
   })
   .config(function ($routeProvider) {
     function ensureAuthenticated($q, authService) {
-      var user = authService.getUser();
-      if (user) {
-        return $q.when(user);
+      if (!authService.isGuest()) {
+        return $q.when(authService.getUser());
       } else {
         return $q.reject({auth: false});
       }
@@ -42,9 +41,9 @@ angular.module('acolyte', [
       controller: 'LogoutCtrl'
     });
 
-    $routeProvider.when('/settings', {
-      templateUrl: 'partials/settings.html',
-      controller: 'SettingsCtrl',
+    $routeProvider.when('/dashboard', {
+      templateUrl: 'partials/dashboard.html',
+      controller: 'DashboardCtrl',
       resolve: {
         auth: ensureAuthenticated
       }

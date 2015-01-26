@@ -29,7 +29,7 @@ module.exports = (robot, utils) ->
 
   # command: !follows
   robot.hear /^!follows/, (res) ->
-    channel = res.message.room.substring 1
+    channel = res.message.room
     client.follows channel, (error, response, body) ->
       unless error
         users = (item.user.name for item in body.follows)
@@ -39,8 +39,9 @@ module.exports = (robot, utils) ->
 
   # command: !twitch_auth
   robot.hear /^!twitch_auth/, (res) ->
-    if robot.adapter.checkAccess res.message.user.name
-      channel = res.message.room.substring 1
+    username = res.message.user.name
+    if robot.adapter.checkAccess username
+      channel = res.message.room
       token = keyring.get channel
       client.me token, (error, response, body) ->
         unless error

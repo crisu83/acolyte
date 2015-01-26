@@ -15,6 +15,6 @@ module.exports = (robot, utils) ->
     query = res.match[1]
     answer = memory.ask query
     if answer
-      res.reply "This is what I know about '#{query}': #{answer}"
+      res.reply answer
     else
-      res.reply "Unfortunately I don't know anything about '#{query}'."
+      res.reply "I'm sorry, I don't know anything about that."

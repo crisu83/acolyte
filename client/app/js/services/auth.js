@@ -20,9 +20,9 @@ angular.module('acolyte')
     var dfd = $q.defer();
     apiService.getTwitchToken(code)
       .success(function (data) {
-        var user = data.user;
-        localStorageService.set('user', user);
-        dfd.resolve(user);
+        localStorageService.set('user', data.user);
+        localStorageService.set('token', data.token);
+        dfd.resolve(data.user);
       })
       .error(function (error) {
         dfd.reject(error);
@@ -32,14 +32,19 @@ angular.module('acolyte')
 
   function logout() {
     localStorageService.remove('user');
+    localStorageService.remove('token');
   }
 
   function getUser() {
     return localStorageService.get('user');
   }
 
+  function getToken() {
+    return localStorageService.get('token');
+  }
+
   function isGuest() {
-    return getUser() === null;
+    return getUser() === null || getToken() === null;
   }
 
   return {
@@ -47,6 +52,7 @@ angular.module('acolyte')
     login: login,
     logout: logout,
     getUser: getUser,
+    getToken: getToken,
     isGuest: isGuest
   };
 

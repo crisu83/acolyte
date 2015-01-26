@@ -43,22 +43,79 @@ module.exports = (robot, utils) ->
         error: error
       res.send json
 
+  # get status
+  router.get "/api/status", (req, res) ->
+    channel = req.param "channel"
+    token = req.param "token"
+    if keyring.validate channel, token
+      status = robot.adapter.active channel
+      json =
+        status: status
+      console.log json
+    else
+      json =
+        success: false
+        error: "Invalid token"
+    res.send json
+
+  # post join
+  router.post "/api/join", (req, res) ->
+    channel = req.param "channel"
+    token = req.param "token"
+    if keyring.validate channel, token
+      status = robot.adapter.join "#" + channel
+      json =
+        success: true
+        status: status
+    else
+      json =
+        success: false
+        error: "Invalid token"
+    res.send json
+
+  # post part
+  router.post "/api/part", (req, res) ->
+    channel = req.param "channel"
+    token = req.param "token"
+    if keyring.validate channel, token
+      status = !robot.adapter.part "#" + channel
+      json =
+        success: true
+        status: status
+    else
+      json =
+        success: false
+        error: "Invalid token"
+    res.send json
+
   # get config
   router.get "/api/settings", (req, res) ->
-    username = req.param "username"
-    settings = config.get(username) || {}
-    json =
-      success: true
-      settings: settings
+    channel = req.param "channel"
+    token = req.param "token"
+    if keyring.validate channel, token
+      settings = config.get channel || {}
+      json =
+        success: true
+        settings: settings
+    else
+      json =
+        success: false
+        error: "Invalid token"
     res.send json
 
   # save config
   router.post "/api/settings", (req, res) ->
-    username = req.param "username"
+    channel = req.param "channel"
+    token = req.param "token"
     settings = req.param "settings"
-    config.set username, settings
-    json =
-      success: true
+    if keyring.validate channel, token
+      config.set channel, settings
+      json =
+        success: true
+    else
+      json =
+        success: false
+        error: "Invalid token"
     res.send json
 
   # get memory

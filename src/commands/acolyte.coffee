@@ -12,10 +12,16 @@ module.exports = (robot, utils) ->
     username = res.message.user.name
     channel = res.message.room.substring 1
     settings = config.get channel
-    if robot.adapter.checkAccess username
+    if robot.name is username
       res.send "Greetings! #{about}"
     else if settings.show_greet
       res.send "Hello #{username}!"
+
+  # event: leave
+  robot.leave (res) ->
+    username = res.message.user.name
+    if robot.name is username
+      res.send "Good bye!"
 
   # command: #{robot.name}
   robot.hear new RegExp("/^#{robot.name}$/"), (res) ->

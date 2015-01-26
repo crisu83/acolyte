@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('acolyte')
-  .controller('SettingsCtrl', function ($scope, $rootScope, $timeout, apiService, loaderService) {
+  .controller('DashboardCtrl', function ($scope, $rootScope, $timeout, authService, apiService, loaderService) {
 
-    var user = $rootScope.user;
+    var user = authService.getUser();
+    var token = authService.getToken();
 
     loaderService.load();
 
-    apiService.getUserSettings(user.name)
+    apiService.getChannelSettings(user.name, token)
       .success(function (data) {
         loaderService.done();
         if (data.success) {
@@ -19,8 +20,8 @@ angular.module('acolyte')
       });
 
     $scope.save = function () {
-      $rootScope.loading = true;
-      apiService.setUserSettings(user.name, $scope.settings)
+      loaderService.load();
+      apiService.setChannelSettings(user.name, token, $scope.settings)
         .success(function (data) {
           loaderService.done();
         })
