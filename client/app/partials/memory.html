@@ -5,7 +5,7 @@
     <ul class="list-unstyled">
       <li ng-repeat="(key, value) in memory">
         {{ value }}
-        <a ng-click="deleteEntry(key)" title="Delete">&times;</a>
+        <a ng-show="user" ng-click="deleteEntry(key)" title="Delete">&times;</a>
       </li>
     </ul>
   </div>
