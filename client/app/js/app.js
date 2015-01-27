@@ -14,8 +14,9 @@ angular.module('acolyte', [
   })
   .config(function ($routeProvider) {
     function ensureAuthenticated($q, authService) {
-      if (!authService.isGuest()) {
-        return $q.when(authService.getUser());
+      var state = authService.getState();
+      if (authService.isAuthenticated(state)) {
+        return $q.when(state.user);
       } else {
         return $q.reject({auth: false});
       }
@@ -51,13 +52,17 @@ angular.module('acolyte', [
 
     $routeProvider.when('/memory', {
       templateUrl: 'partials/memory.html',
-      controller: 'MemoryCtrl'
+      controller: 'MemoryCtrl',
+      resolve: {
+        auth: ensureAuthenticated
+      }
     });
 
     $routeProvider.otherwise({redirectTo: '/'});
   })
   .run(function ($rootScope, $location, authService) {
-    $rootScope.user = authService.getUser();
+    var state = authService.getState();
+    $rootScope.user = state && state.user ? state.user : null;
 
     $rootScope.$on('#routeChangeError', function (name, current, previous, event) {
       if (event.auth === false) {

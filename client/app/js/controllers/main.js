@@ -4,61 +4,58 @@ angular.module('acolyte')
   .controller('MainCtrl', function ($scope, authService, apiService, loaderService) {
 
     function init() {
-      if (!authService.isGuest()) {
-        var user = authService.getUser();
-        var token = authService.getToken();
-        loaderService.load();
-          apiService.getStatus(user.name, token)
-          .success(function (data) {
-            loaderService.done();
-            if (data.success) {
-              $scope.status = data.status;
+      var state = authService.getState();
+      if (authService.isAuthenticated(state)) {
+        loaderService.load('init');
+        apiService.getStatus(state.user.name, state.token)
+          .success(function (json) {
+            loaderService.done('init');
+            if (json.success) {
+              $scope.status = json.data.status;
             }
           })
-          .error(function (data) {
-            loaderService.done();
+          .error(function (json) {
+            loaderService.done('init');
           });
       }
     }
 
-    function join() {
-      if (!authService.isGuest()) {
-        var user = authService.getUser();
-        var token = authService.getToken();
-        loaderService.load();
-          apiService.joinChannel(user.name, token)
-          .success(function (data) {
-            loaderService.done();
-            if (data.success) {
-              $scope.status = data.status;
+    function joinChannel() {
+      var state = authService.getState();
+      if (authService.isAuthenticated(state)) {
+        loaderService.load('joinChannel');
+        apiService.joinChannel(state.user.name, state.token)
+          .success(function (json) {
+            loaderService.done('joinChannel');
+            if (json.success) {
+              $scope.status = json.data.status;
             }
           })
-          .error(function (data) {
-            loaderService.done();
+          .error(function (json) {
+            loaderService.done('joinChannel');
           });
       }
     }
 
-    function part() {
-      if (!authService.isGuest()) {
-        var user = authService.getUser();
-        var token = authService.getToken();
-        loaderService.load();
-          apiService.partChannel(user.name, token)
-          .success(function (data) {
-            loaderService.done();
-            if (data.success) {
-              $scope.status = data.status;
+    function leaveChannel() {
+      var state = authService.getState();
+      if (authService.isAuthenticated(state)) {
+        loaderService.load('leaveChannel');
+        apiService.partChannel(state.user.name, state.token)
+          .success(function (json) {
+            loaderService.done('leaveChannel');
+            if (json.success) {
+              $scope.status = json.data.status;
             }
           })
-          .error(function (data) {
-            loaderService.done();
+          .error(function (json) {
+            loaderService.done('leaveChannel');
           });
       }
     }
 
-    $scope.join = join;
-    $scope.part = part;
+    $scope.joinChannel = joinChannel;
+    $scope.leaveChannel = leaveChannel;
 
     init();
 

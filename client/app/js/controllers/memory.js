@@ -6,32 +6,30 @@ angular.module('acolyte')
     $scope.memory = {};
 
     function loadMemory() {
-      loaderService.load();
-
+      loaderService.load('loadMemory');
       apiService.dumpMemory()
-        .success(function (data) {
-          loaderService.done();
-          if (data.success) {
-            $scope.memory = data.memory;
+        .success(function (json) {
+          loaderService.done('loadMemory');
+          if (json.success) {
+            $scope.memory = json.data.memory;
           }
         })
         .error(function (data) {
-          loaderService.done();
+          loaderService.done('loadMemory');
         });
     }
 
-    function deleteEntry(id) {
-      loaderService.load();
-
+    function deleteItem(id) {
+      loaderService.load('deleteItem');
       apiService.deleteMemoryEntry(id)
-        .success(function (data) {
-          loaderService.done();
-          if (data.success) {
+        .success(function (json) {
+          loaderService.done('deleteItem');
+          if (json.success) {
             delete $scope.memory[id]
           }
         })
-        .error(function (data) {
-          loaderService.done();
+        .error(function (json) {
+          loaderService.done('deleteItem');
         });
     }
 
@@ -39,6 +37,6 @@ angular.module('acolyte')
 
     $interval(loadMemory, 1000 * 30);
 
-    $scope.deleteEntry = deleteEntry;
+    $scope.deleteItem = deleteItem;
 
   });

@@ -38,12 +38,12 @@ angular.module('acolyte')
       });
     }
 
-    function getTwitchAuthUrl() {
-      return $http.post('/api/twitch/authUrl');
+    function getAuthUrl() {
+      return $http.get('/api/twitch/authUrl');
     }
 
-    function getTwitchToken(code) {
-      return $http.post('/api/twitch/token', {
+    function postAuthCode(code) {
+      return $http.post('/api/twitch/code', {
         code: code
       });
     }
@@ -65,16 +65,36 @@ angular.module('acolyte')
       });
     }
 
+    function getFollows(channel, token) {
+      return $http.get('/api/twitch/follows', {
+        params: {
+          channel: channel,
+          token: token
+        }
+      });
+    }
+
+    function getSubscriptions(channel, token) {
+      return $http.get('/api/twitch/subscriptions', {
+        params: {
+          channel: channel,
+          token: token
+        }
+      });
+    }
+
     return {
       getStatus: getStatus,
       joinChannel: joinChannel,
       partChannel: partChannel,
       dumpMemory: dumpMemory,
       deleteMemoryEntry: deleteMemoryEntry,
-      getTwitchAuthUrl: getTwitchAuthUrl,
-      getTwitchToken: getTwitchToken,
+      getAuthUrl: getAuthUrl,
+      postAuthCode: postAuthCode,
       getChannelSettings: getChannelSettings,
-      setChannelSettings: setChannelSettings
+      setChannelSettings: setChannelSettings,
+      getFollows: getFollows,
+      getSubscriptions: getSubscriptions
     };
 
   });

@@ -3,57 +3,56 @@
 angular.module('acolyte')
 .factory('authService', function ($q, config, apiService, localStorageService) {
 
+  var STORAGE_KEY = 'acolyte.state';
+
   function getAuthUrl() {
     var dfd = $q.defer();
-    apiService.getTwitchAuthUrl()
-      .success(function (data) {
-        var authUrl = data.url + '&scope=' + config.authScope;
-        dfd.resolve(authUrl);
+    apiService.getAuthUrl()
+      .success(function (json) {
+        if (json.success) {
+          var authUrl = json.data.url + '&scope=' + config.authScope;
+          dfd.resolve(authUrl);
+        }
       })
-      .error(function (error) {
-        dfd.reject(error);
+      .error(function (json) {
+        dfd.reject(json.error);
       });
     return dfd.promise;
   }
 
   function login(code) {
     var dfd = $q.defer();
-    apiService.getTwitchToken(code)
-      .success(function (data) {
-        localStorageService.set('user', data.user);
-        localStorageService.set('token', data.token);
-        dfd.resolve(data.user);
+    apiService.postAuthCode(code)
+      .success(function (json) {
+        if (json.success) {
+          localStorageService.set(STORAGE_KEY, json.data);
+          dfd.resolve(json.data.user);
+        }
       })
-      .error(function (error) {
-        dfd.reject(error);
+      .error(function (json) {
+        dfd.reject(json.error);
       });
     return dfd.promise;
   }
 
   function logout() {
-    localStorageService.remove('user');
-    localStorageService.remove('token');
+    localStorageService.remove(STORAGE_KEY);
   }
 
-  function getUser() {
-    return localStorageService.get('user');
+  function getState() {
+    return localStorageService.get(STORAGE_KEY);
   }
 
-  function getToken() {
-    return localStorageService.get('token');
-  }
-
-  function isGuest() {
-    return getUser() === null || getToken() === null;
+  function isAuthenticated(state) {
+    return state && state.user && state.token;
   }
 
   return {
     getAuthUrl: getAuthUrl,
     login: login,
     logout: logout,
-    getUser: getUser,
-    getToken: getToken,
-    isGuest: isGuest
+    getState: getState,
+    isAuthenticated: isAuthenticated
   };
 
 });

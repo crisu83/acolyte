@@ -1,4 +1,14 @@
 <div class="dashboard">
+  <div class="follows">
+    <h2>Followers</h2>
+    <p class="lead">They are awesome.</p>
+    <ul class="list-inline">
+      <li ng-repeat="item in follows">
+        <a href="http://twitch.tv/{{item.user.name}}" target="_blank" rel="nofollow">{{item.user.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <hr/>
   <div class="settings">
     <h2>Settings</h2>
     <p class="lead">Configure your bot.</p>
