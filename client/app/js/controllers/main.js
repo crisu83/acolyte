@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('acolyte')
-  .controller('MainCtrl', function ($scope, authService, apiService, loaderService) {
+  .controller('MainCtrl', function ($scope, $location, authService, apiService, loaderService, noteService) {
 
     function init() {
       var state = authService.getState();
@@ -12,10 +12,14 @@ angular.module('acolyte')
             loaderService.done('init');
             if (json.success) {
               $scope.status = json.data.status;
+            } else {
+              noteService.error(json.error);
+              $location.path('/logout');
             }
           })
           .error(function (json) {
             loaderService.done('init');
+            noteService.error(json.error);
           });
       }
     }
@@ -29,10 +33,15 @@ angular.module('acolyte')
             loaderService.done('joinChannel');
             if (json.success) {
               $scope.status = json.data.status;
+              noteService.success('Acolyte joined your channel');
+            } else {
+              noteService.error(json.error);
+              $location.path('/logout');
             }
           })
           .error(function (json) {
             loaderService.done('joinChannel');
+            noteService.error(json.error);
           });
       }
     }
@@ -46,10 +55,15 @@ angular.module('acolyte')
             loaderService.done('leaveChannel');
             if (json.success) {
               $scope.status = json.data.status;
+              noteService.warning('Acolyte left your channel');
+            } else {
+              noteService.error(json.error);
+              $location.path('/logout');
             }
           })
           .error(function (json) {
             loaderService.done('leaveChannel');
+            noteService.error(json.error);
           });
       }
     }

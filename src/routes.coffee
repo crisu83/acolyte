@@ -57,7 +57,7 @@ module.exports = (robot, utils) ->
         else
           res.send json.error(error)
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # get twitch subscriptions
   router.get "/api/twitch/subscriptions", (req, res) ->
@@ -72,7 +72,7 @@ module.exports = (robot, utils) ->
         else
           res.send json.error(error)
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # get status
   router.get "/api/status", (req, res) ->
@@ -84,7 +84,7 @@ module.exports = (robot, utils) ->
       json.add "status", status
       res.send json.success()
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # post join
   router.post "/api/join", (req, res) ->
@@ -96,7 +96,7 @@ module.exports = (robot, utils) ->
       json.add "status", status
       res.send json.success()
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # post part
   router.post "/api/part", (req, res) ->
@@ -108,7 +108,7 @@ module.exports = (robot, utils) ->
       json.add "status", status
       res.send json.success()
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # get config
   router.get "/api/settings", (req, res) ->
@@ -120,7 +120,7 @@ module.exports = (robot, utils) ->
       json.add "settings", settings
       res.send json.success()
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # save config
   router.post "/api/settings", (req, res) ->
@@ -132,7 +132,7 @@ module.exports = (robot, utils) ->
       config.set channel, settings
       res.send json.success()
     else
-      res.send json.error("Invalid token")
+      res.send json.error("Authentication failed")
 
   # get memory
   router.get "/api/memory", (req, res) ->

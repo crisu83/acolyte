@@ -10,6 +10,13 @@ body {
 
 // --- Layout ---
 
+h1 {
+  > small {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
 hr {
   border-top: 1px solid #444;
   margin: 80px 0;
@@ -23,6 +30,15 @@ a[ng-click] {
   position: relative;
 }
 
+.masthead-brand {
+  margin: 5px 0;
+}
+
+.masthead-left {
+  float: left;
+  margin-left: 40px;
+}
+
 .masthead-loader {
   left: 50%;
   margin-left: -25px;
@@ -30,8 +46,70 @@ a[ng-click] {
   top: 0;
 }
 
-.nav-join > .glyphicon-flash {
+.masthead-nav > li {
+  position: relative;
+}
+
+.masthead-nav > li > a {
+  min-width: 20px;
+}
+
+.masthead-nav > li > .nav-dashboard:before {
+  background: #444;
+  content: "";
+  display: block;
+  left: -15px;
+  height: 23px;
+  position: absolute;
+  width: 2px;
+}
+
+.nav-join {
   opacity: .3;
+}
+
+.note {
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 30px 30px 30px 0;
+  position: fixed;
+  text-align: right;
+  top: 80px;
+}
+
+@media (min-width: @screen-sm) {
+  .note {
+    width: 100%;
+  }
+}
+
+@media (min-width: @screen-md) {
+  .note {
+    width: 700px;
+  }
+}
+
+.note-success {
+  color: @brand-success;
+}
+
+.note-warning {
+  color: @brand-warning;
+}
+
+.note-error {
+  color: @brand-danger;
+}
+
+.cover-icon {
+  color: #444;
+  font-size: 50px;
+  margin: -40px 0 0;
+}
+
+.cover-title {
+  margin: 10px 0;
 }
 
 .acolyte-icon {
@@ -49,38 +127,98 @@ a[ng-click] {
   cursor: default;
 }
 
+.acolyte-mission {
+  color: #888;
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.acolyte-feature {
+  text-align: left;
+
+  p {
+    color: #888;
+  }
+}
+
 // -- Controllers --
 
-.dashboard {
-  .settings {
-    margin: auto;
-    width: 320px;
+.commands {
+  .item {
+    .clearfix();
+    margin: 5px 0;
+  }
 
-    .setting-control {
-      .clearfix();
-      margin-bottom: 5px;
+  .item-command {
+    box-sizing: border-box;
+    color: #888;
+    display: block;
+    float: left;
+    font-family: @font-family-monospace;
+    font-weight: bold;
+    padding-right: 10px;
+    text-align: right;
+    width: 50%;
+  }
 
-      label {
+  .item-description {
+    box-sizing: border-box;
+    display: block;
+    float: right;
+    padding-left: 10px;
+    text-align: left;
+    width: 50%;
+  }
+}
+
+.memory {
+  .item {
+    margin: 5px 0;
+  }
+}
+
+.settings {
+  margin: auto;
+  width: 340px;
+
+  .setting-control {
+    .clearfix();
+    margin-bottom: 5px;
+
+    label {
+      display: block;
+      float: left;
+      line-height: 16px;
+      text-align: left;
+
+      & > small {
+        color: #888;
         display: block;
-        float: left;
-        line-height: 16px;
-        text-align: left;
-
-        & > small {
-          color: #888;
-          display: block;
-          font-weight: normal;
-        }
+        font-weight: normal;
       }
+    }
 
-      .toggle-switch {
-        float: right;
-      }
+    .toggle-switch {
+      float: right;
     }
   }
 }
 
 // -- Widgets ---
+
+.tooltip {
+  border-radius: 0;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.tooltip-arrow {
+  display: none;
+}
+
+.tooltip-inner {
+  background-color: transparent;
+}
 
 .toggle-switch {
   text-shadow: none;
@@ -89,3 +227,19 @@ a[ng-click] {
     background: #222 !important;
   }
 }
+
+// -- Animations --
+
+.reveal-animation.ng-enter {
+  -webkit-animation: enter_sequence 0.5s linear;
+  animation: enter_sequence 0.5s linear;
+}
+@-webkit-keyframes enter_sequence { from { opacity: 0; } to { opacity: 1; } }
+@keyframes enter_sequence { from { opacity: 0; } to { opacity: 1; } }
+
+.conceal-animation.ng-hide {
+  -webkit-animation: leave_sequence 0.3s linear;
+  animation: leave_sequence 0.3s linear;
+}
+@-webkit-keyframes leave_sequence { from { opacity: 1; } to { opacity: 0; }}
+@keyframes leave_sequence { from { opacity: 1; } to { opacity: 0; }}

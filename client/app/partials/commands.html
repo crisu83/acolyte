@@ -1,0 +1,10 @@
+<div class="commands">
+  <h1 class="cover-title">Commands</h1>
+  <p class="lead">Acolyte responds to the following commands in any stream where he is present. You should try to memorize at least some of them.</p>
+  <ul class="items list-unstyled">
+    <li class="item" ng-show="user && item.users === '@' || item.users === '*'" ng-repeat="item in commands">
+      <span class="item-command">{{ item.command }}</span>
+      <span class="item-description">{{ item.description }}</span>
+    </li>
+  </ul>
+</div>

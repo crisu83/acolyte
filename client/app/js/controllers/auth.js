@@ -7,7 +7,7 @@ angular.module('acolyte')
       authService.login($routeParams.code)
         .then(function (data) {
           $rootScope.user = data;
-          $location.url('/dashboard');
+          $location.url('/');
         }, function (error) {
           console.log('ERROR: ' + error);
         });

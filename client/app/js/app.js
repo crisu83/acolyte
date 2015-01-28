@@ -2,6 +2,7 @@
 
 angular.module('acolyte', [
   'ngRoute',
+  'ngAnimate',
   'ui.bootstrap',
   'toggle-switch',
   'LocalStorageModule'
@@ -27,6 +28,16 @@ angular.module('acolyte', [
       controller: 'IndexCtrl'
     });
 
+    $routeProvider.when('/commands', {
+      templateUrl: 'partials/commands.html',
+      controller: 'CommandsCtrl'
+    });
+
+    $routeProvider.when('/memory', {
+      templateUrl: 'partials/memory.html',
+      controller: 'MemoryCtrl'
+    });
+
     $routeProvider.when('/login', {
       templateUrl: 'partials/loading.html',
       controller: 'LoginCtrl'
@@ -42,17 +53,17 @@ angular.module('acolyte', [
       controller: 'LogoutCtrl'
     });
 
-    $routeProvider.when('/dashboard', {
-      templateUrl: 'partials/dashboard.html',
-      controller: 'DashboardCtrl',
+    $routeProvider.when('/community', {
+      templateUrl: 'partials/community.html',
+      controller: 'CommunityCtrl',
       resolve: {
         auth: ensureAuthenticated
       }
     });
 
-    $routeProvider.when('/memory', {
-      templateUrl: 'partials/memory.html',
-      controller: 'MemoryCtrl',
+    $routeProvider.when('/settings', {
+      templateUrl: 'partials/settings.html',
+      controller: 'SettingsCtrl',
       resolve: {
         auth: ensureAuthenticated
       }

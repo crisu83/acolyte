@@ -2,22 +2,33 @@
   <div class="inner">
     <h3 class="masthead-brand"><a ng-href="#/">Acolyte</a></h3>
     <div class="masthead-loader" ng-show="loading" ng-include="'partials/_spinner.html'"></div>
-    <nav>
+    <nav class="masthead-left">
       <ul class="nav masthead-nav" ng-cloak>
-        <li ng-hide="user">
-          <a ng-href="#/login">Login</a>
+        <li>
+          <a ng-href="#/commands" tooltip="Commands" tooltip-placement="bottom" tooltip-animation="false"><span class="fa fa-terminal"></span></a>
         </li>
-        <li ng-show="user">
-          <a ng-href="#/dashboard">{{ user.name }}</a>
+        <li>
+          <a ng-href="#/memory" tooltip="Memory" tooltip-placement="bottom" tooltip-animation="false"><span class="fa fa-database"></span></a>
+        </li>
+      </ul>
+    </nav>
+    </nav>
+    <nav class="masthead-right">
+      <ul class="nav masthead-nav">
+        <li ng-hide="user">
+          <a class="nav-login" ng-href="#/login">Login</a>
         </li>
         <li ng-show="user && !status">
-          <a class="nav-join" ng-click="joinChannel()" title="Join Channel"><span class="glyphicon glyphicon-flash"></span></a>
+          <a class="nav-join" ng-click="joinChannel()" tooltip="ACTIVATE" tooltip-placement="bottom" tooltip-animation="false">{{ user.name }}</a>
         </li>
         <li ng-show="user && status">
-          <a class="nav-part" ng-click="leaveChannel()" title="Leave Channel"><span class="glyphicon glyphicon-flash"></span></a>
+          <a class="nav-part" ng-click="leaveChannel()" tooltip="DEACTIVATE" tooltip-placement="bottom" tooltip-animation="false">{{ user.name }}</a>
         </li>
         <li ng-show="user">
-          <a ng-href="#/logout" title="Logout"><span class="glyphicon glyphicon-off"></span></a>
+          <a class="nav-settings" ng-href="#/settings" tooltip="Settings" tooltip-placement="bottom" tooltip-animation="false"><span class="fa fa-cog"></span></a>
+        </li>
+        <li ng-show="user">
+          <a class="nav-logout" ng-href="#/logout" tooltip="Logout" tooltip-placement="bottom" tooltip-animation="false"><span class="fa fa-power-off"></span></a>
         </li>
       </ul>
     </nav>

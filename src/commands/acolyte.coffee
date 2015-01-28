@@ -43,6 +43,10 @@ module.exports = (robot, utils) ->
       robot.adapter.part "#" + channel
       res.reply "Leaving #{channel}"
 
-  # about
+  # command: !commands
+  robot.hear /^!commands/, (res) ->
+    res.reply "A list of all the commands that I understand can be found at http://acolyte.io/#/commands."
+
+  # command: !about
   robot.hear /^!about/, (res) ->
     res.reply about

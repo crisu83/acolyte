@@ -1,0 +1,4 @@
+<div ng-hide="!note.visible" ng-class="{'note-success': note.state === 'success', 'note-warning': note.state === 'warning', 'note-error': note.state === 'error'}" class="note conceal-animation">
+  <span class="fa" ng-class="{'fa-check-circle': note.state === 'success', 'fa-exclamation-circle': note.state === 'warning', 'fa-times-circle': note.state === 'error'}"></span>
+  {{ note.message }}
+</div>

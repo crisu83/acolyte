@@ -1,11 +1,10 @@
 <div class="memory">
   <h1 class="cover-heading">Memory</h1>
-  <p class="lead">This is what I know.</p>
+  <p class="lead">Acolyte can be thought things. These are stored in his memory and when asked he will search his memory for an answer to your question.</p>
   <div class="memory-container">
-    <ul class="list-unstyled">
-      <li ng-repeat="(key, value) in memory">
-        {{ value }}
-        <a ng-show="user" ng-click="deleteItem(key)" title="Delete">&times;</a>
+    <ul class="items list-unstyled">
+      <li class="item" ng-repeat="(key, value) in memory">
+        {{ value }} <a ng-show="user" ng-click="deleteItem(key)" tooltip="Delete" tooltip-placement="right" tooltip-animation="false"><span class="fa fa-times-circle"></span></a>
       </li>
     </ul>
   </div>
