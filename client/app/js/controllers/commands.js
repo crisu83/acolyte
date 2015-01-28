@@ -40,6 +40,11 @@ angular.module('acolyte')
         command: '!psn',
         description: 'Tells you the status of PSN',
         users: '*'
+      },
+      {
+        command: '!about',
+        description: 'Tells you some information about Acolyte',
+        users: '*'
       }
     ];
 
