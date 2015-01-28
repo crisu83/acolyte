@@ -5,7 +5,7 @@ module.exports = (robot, utils) ->
   logger = robot.logger
   config = utils.config
 
-  about = "I'm Acolyte, your personal Twitch robot. Calistar created me to assist you. For a complete list of commands please visit: http://twitch.tv/calistartv"
+  about = "I'm Acolyte, your personal Twitch assistant. Calistar created me to assist everyone in your channel. For more information please visit http://acolyte.io"
 
   # event: enter
   robot.enter (res) ->
@@ -45,7 +45,7 @@ module.exports = (robot, utils) ->
 
   # command: !commands
   robot.hear /^!commands/, (res) ->
-    res.reply "A list of all the commands that I understand can be found at http://acolyte.io/#/commands."
+    res.reply "A list of the commands that I understand can be found at http://acolyte.io/#/commands"
 
   # command: !about
   robot.hear /^!about/, (res) ->
