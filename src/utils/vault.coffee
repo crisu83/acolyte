@@ -1,4 +1,6 @@
-class Vault
+Store = require "./store"
+
+class Vault extends Store
   STORAGE_KEY: "acolyte.vault"
 
   constructor: (@robot) ->
@@ -19,11 +21,5 @@ class Vault
     unless @save data
       @robot.logger.error "ERROR: Failed to save values in vault."
     @robot.logger.info "VAULT: Set #{key} for #{username} (#{value})"
-
-  load: ->
-    @robot.brain[@STORAGE_KEY] || {}
-
-  save: (data) ->
-    @robot.brain[@STORAGE_KEY] = data
 
 module.exports = Vault

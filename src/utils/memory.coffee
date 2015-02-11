@@ -1,7 +1,8 @@
 lunr = require "lunr"
 shortid = require "shortid"
+Store = require "./store"
 
-class Memory
+class Memory extends Store
   STORAGE_KEY: "acolyte.memory"
 
   constructor: (@robot) ->
@@ -54,17 +55,10 @@ class Memory
     @robot.logger.info "MEMORY: Forgot '#{item.body}' (#{item.id})"
     true
 
-
   createItem: (thing) ->
     item =
       id: shortid.generate()
       body: thing
       time: +new Date()
-
-  load: ->
-    @robot.brain[@STORAGE_KEY] || {}
-
-  save: (data) ->
-    @robot.brain[@STORAGE_KEY] = data
 
 module.exports = Memory

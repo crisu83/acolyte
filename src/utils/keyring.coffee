@@ -1,4 +1,6 @@
-class Keyring
+Store = require "./store"
+
+class Keyring extends Store
   STORAGE_KEY: "acolyte.keyring"
 
   constructor: (@robot) ->
@@ -29,11 +31,5 @@ class Keyring
       result = token is data[username]
     @robot.logger.info "KEYRING: Validate token #{token} for #{username} (#{result})"
     result
-
-  load: ->
-    @robot.brain[@STORAGE_KEY] || {}
-
-  save: (data) ->
-    @robot.brain[@STORAGE_KEY] = data
 
 module.exports = Keyring

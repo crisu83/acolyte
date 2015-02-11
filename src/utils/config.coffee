@@ -1,4 +1,6 @@
-class Config
+Store = require "./store"
+
+class Config extends Store
   STORAGE_KEY: "acolyte.config"
 
   constructor: (@robot) ->
@@ -21,11 +23,5 @@ class Config
     config = data[channel]
     delete data[channel]
     @robot.logger.info "CONFIG: Remove config for #{channel} (#{JSON.stringify config})"
-
-  load: ->
-    @robot.brain[@STORAGE_KEY] || {}
-
-  save: (data) ->
-    @robot.brain[@STORAGE_KEY] = data
 
 module.exports = Config
