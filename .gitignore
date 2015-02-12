@@ -6,3 +6,5 @@ client/public
 .hubot_history
 .DS_Store*
 hubot_config
+nohup.out
+*.log
