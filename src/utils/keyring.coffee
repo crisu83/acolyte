@@ -32,4 +32,5 @@ class Keyring extends Store
     @robot.logger.info "KEYRING: Validate token #{token} for #{username} (#{result})"
     result
 
-module.exports = Keyring
+exports.use = (robot) ->
+  @instance = if @instance then @instance else new Keyring robot

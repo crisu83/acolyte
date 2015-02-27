@@ -1,14 +1,17 @@
 express = require "express"
-JsonResponse = require "./utils/json-response.coffee"
+JsonResponse = require "../utils/json-response.coffee"
 
-module.exports = (robot, utils) ->
+module.exports = (robot) ->
+
+  config = require("../utils/config").use robot
+  keyring = require("../utils/keyring").use robot
+  memory = require("../utils/memory").use robot
 
   twitch = robot.adapter.twitchClient
   {logger, router} = robot
-  {config, keyring, memory} = utils
 
   # static
-  router.use express.static("#{__dirname}/../client/public")
+  router.use express.static("#{__dirname}/../../client/public")
 
   # get twitch authentication url
   router.get "/api/twitch/authUrl", (req, res) ->

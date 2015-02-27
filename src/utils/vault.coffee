@@ -22,4 +22,5 @@ class Vault extends Store
       @robot.logger.error "ERROR: Failed to save values in vault."
     @robot.logger.info "VAULT: Set #{key} for #{username} (#{value})"
 
-module.exports = Vault
+exports.use = (robot) ->
+  @instance = if @instance then @instance else new Vault robot

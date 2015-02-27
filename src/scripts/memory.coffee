@@ -1,6 +1,6 @@
-module.exports = (robot, utils) ->
+module.exports = (robot) ->
 
-  memory = utils.memory
+  memory = require("../utils/memory").use robot
 
   # command: !tell <thing>
   robot.hear /^!tell (.*)/, (res) ->

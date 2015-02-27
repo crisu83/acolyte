@@ -1,6 +1,6 @@
 jsdom = require "jsdom"
 
-module.exports = (robot, utils) ->
+module.exports = (robot) ->
 
   logger = robot.logger
 

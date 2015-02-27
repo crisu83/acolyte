@@ -2,9 +2,12 @@ module.exports = (robot, utils) ->
 
   MAX_USERS_TO_LIST = 20
 
+  config = require("../utils/config").use robot
+  keyring = require("../utils/keyring").use robot
+  vault = require("../utils/vault").use robot
+
   client = robot.adapter.twitchClient
   logger = robot.logger
-  {config, keyring, vault} = utils
 
   # event: enter
   robot.enter (res) ->

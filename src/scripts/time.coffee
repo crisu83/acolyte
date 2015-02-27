@@ -1,6 +1,6 @@
 moment = require "moment-timezone"
 
-module.exports = (robot, config) ->
+module.exports = (robot) ->
 
   logger = robot.logger
 

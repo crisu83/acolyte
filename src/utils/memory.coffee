@@ -61,4 +61,5 @@ class Memory extends Store
       body: thing
       time: +new Date()
 
-module.exports = Memory
+exports.use = (robot) ->
+  @instance = if @instance then @instance else new Memory robot

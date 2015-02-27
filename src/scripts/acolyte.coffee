@@ -1,9 +1,10 @@
 jsdom = require "jsdom"
 
-module.exports = (robot, utils) ->
+module.exports = (robot) ->
+
+  config = require("../utils/config").use robot
 
   logger = robot.logger
-  config = utils.config
 
   about = "I'm Acolyte, your personal Twitch assistant. Calistar created me to assist everyone in your channel. For more information please visit http://acolyte.io"
 

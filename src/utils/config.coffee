@@ -24,4 +24,5 @@ class Config extends Store
     delete data[channel]
     @robot.logger.info "CONFIG: Remove config for #{channel} (#{JSON.stringify config})"
 
-module.exports = Config
+exports.use = (robot) ->
+  @instance = if @instance then @instance else new Config robot
