@@ -34,7 +34,7 @@ module.exports = (robot) ->
 
     if now > arrival and now < departure
       time = formatTimeLeft(Math.abs(now - departure) / 1000)
-      res.reply "Xûr is in the tower and depatures in #{time}. You find out where he is and what he has from http://findxur.com."
+      res.reply "Xûr is in the tower and departs in #{time}. You can find out where he is and what he has from http://findxur.com."
     else
       time = formatTimeLeft(Math.abs(now - arrival) / 1000)
       res.reply "Xûr arrives at the tower in #{time}."
